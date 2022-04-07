@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+
+<h1 align="center">Notes</h1>
+<ul class="list-group list-group-flush" id="notes">
+  {% for grain in user.foodWaste %}
+  <li class="list-group-item">
+    {{ grain.food }}
+    <button type="button" class="close" onClick="deleteNote({{ grain.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <script>
+      function deleteNote(noteId) {
+        fetch("/delete-note", {
+          method: "POST",
+          body: JSON.stringify({ noteId: noteId }),
+        }).then((_res) => {
+          window.location.href = "/";
+        });
+      }
+    </script>
+  </li>
+  {% endfor %}
+</ul>
+<form method="POST">
+  <textarea name="grain" id="grain" class="form-control"></textarea>
+  <br />
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Add Grain</button>
+  </div>
+</form>
+{% endblock %}
