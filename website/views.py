@@ -51,7 +51,7 @@ def delete_note():
     
     return jsonify({})
 
-
+# TEST
 # @views.route('/', methods=['GET', 'POST'])
 # @login_required
 # def home():
