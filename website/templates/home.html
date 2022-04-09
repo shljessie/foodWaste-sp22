@@ -19,15 +19,145 @@
           window.location.href = "/";
         });
       }
+
+      function showVal() {}
     </script>
   </li>
   {% endfor %}
 </ul>
+
+<br />
 <form method="POST">
-  <textarea name="grain" id="grain" class="form-control"></textarea>
+  <input
+    type="range"
+    name="grain"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="grain"
+  />
+  <br />
+  <input
+    type="range"
+    name="fruit_fresh"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="fruit_fresh"
+  />
+  <input
+    type="range"
+    name="fruit_proc"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="fruit_proc"
+  />
+  <input
+    type="range"
+    name="veggie_fresh"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="veggie_fresh"
+  />
+  <input
+    type="range"
+    name="veggie_proc"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="veggie_proc"
+  />
+  <input
+    type="range"
+    name="milk"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="milk"
+  />
+  <input
+    type="range"
+    name="dairy"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="dairy"
+  />
+  <input
+    type="range"
+    name="meat"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="meat"
+  />
+  <input
+    type="range"
+    name="poultry"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="poultry"
+  />
+  <input
+    type="range"
+    name="fish_seafood"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="fish_seafood"
+  />
+  <input
+    type="range"
+    name="eggs"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="eggs"
+  />
+  <input
+    type="range"
+    name="nuts"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="nuts"
+  />
+  <input
+    type="range"
+    name="sweet"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="sweet"
+  />
+  <input
+    type="range"
+    name="fats_oils'"
+    min="1"
+    max="100"
+    value="50"
+    class="myslider"
+    id="fats_oils"
+  />
   <br />
   <div align="center">
-    <button type="submit" class="btn btn-primary">Add Grain</button>
+    <button type="submit" class="btn btn-primary">Add Food</button>
   </div>
 </form>
 {% endblock %}
