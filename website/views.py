@@ -66,7 +66,7 @@ def home():
             db.session.commit()
             flash('Showing your Green-O-Meter', category='success')
 
-    return render_template("home.html", user=current_user)
+    return render_template("index.html", user=current_user)
 
 
 @views.route('/delete-note', methods=['POST'])
