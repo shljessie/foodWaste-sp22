@@ -27,7 +27,7 @@ numpy==1.19.2
 pathlib2==2.3.5
 py2app==0.7.3
 pycparser==2.19
-pylint==1.9.5
+pylint==2.14.0
 pyobjc-core==2.5.1
 pyobjc-framework-Accounts==2.5.1
 pyobjc-framework-AddressBook==2.5.1
