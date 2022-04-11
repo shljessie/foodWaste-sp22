@@ -1,12 +1,74 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
 
-<h1 align="center">Notes</h1>
+<h1 align="center">Food Waste Data</h1>
+<br />
+<div align="center">
+  <table>
+    <tr>
+      <th>
+        <form method="POST">
+          <input
+            type="hidden"
+            name="food_waste_CLICK"
+            id="food_waste_CLICK"
+            value="food_waste_CLICK"
+          />
+          <input type="hidden" name="foodwCLICK" id="foodwCLICK" value="1" />
+          <button type="submit" class="btn btn-secondary">
+            Total Food Wasted
+          </button>
+        </form>
+      </th>
+      <th>
+        <form method="POST">
+          <input
+            type="hidden"
+            name="money_spent_CLICK"
+            id="money_spent_CLICK"
+            value="money_spent_CLICK"
+          />
+          <input type="hidden" name="monwCLICK" id="monwCLICK" value="1" />
+          <button type="submit" class="btn btn-secondary">
+            Total Money Spent
+          </button>
+        </form>
+      </th>
+      <th>
+        <form method="POST">
+          <input
+            type="hidden"
+            name="daily_progress_CLICK"
+            id="daily_progress_CLICK"
+            value="daily_progress_CLICK"
+          />
+          <input type="hidden" name="progCLICK" id="progCLICK" value="1" />
+          <button type="submit" class="btn btn-secondary">
+            Daily Progress
+          </button>
+        </form>
+      </th>
+      <th>
+        <form method="POST">
+          <input
+            type="hidden"
+            name="green_o_meter_CLICK"
+            id="green_o_meter_CLICK"
+            value="green_o_meter_CLICK"
+          />
+          <input type="hidden" name="gomCLICK" id="gomCLICK" value="1" />
+          <button type="submit" class="btn btn-secondary">Green-O-Meter</button>
+        </form>
+      </th>
+    </tr>
+  </table>
+</div>
+<br />
 <ul class="list-group list-group-flush" id="notes">
-  {% for grain in user.foodWaste %}
+  {% for day in user.foodWaste %}
   <li class="list-group-item">
-    {{ grain.food }}
-    <button type="button" class="close" onClick="deleteNote({{ grain.id }})">
+    {{ day.date }}
+    <button type="button" class="close" onClick="deleteNote({{ day.id }})">
       <span aria-hidden="true">&times;</span>
     </button>
 
@@ -19,145 +81,153 @@
           window.location.href = "/";
         });
       }
-
       function showVal() {}
     </script>
   </li>
   {% endfor %}
 </ul>
 
+<script>
+  function outputUpdate(vol, id) {
+    document.querySelector("#" + id).value = vol;
+  }
+</script>
+
 <br />
+
 <form method="POST">
   <input
-    type="range"
-    name="grain"
-    min="1"
-    max="100"
-    value="50"
-    class="myslider"
-    id="grain"
+    type="hidden"
+    name="food_waste_data"
+    id="food_waste_data"
+    value="food_waste_data"
   />
-  <br />
+  <label for="fruit">Fruits</label>
   <input
     type="range"
-    name="fruit_fresh"
-    min="1"
+    name="fruit"
+    min="0"
     max="100"
-    value="50"
+    value="0"
     class="myslider"
-    id="fruit_fresh"
+    id="fruit"
+    oninput="outputUpdate(value, 'fruit_val')"
   />
+  <output for="fruit" id="fruit_val">0</output>
+  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+  <label for="veggies">Vegetables</label>
   <input
     type="range"
-    name="fruit_proc"
-    min="1"
+    name="veggies"
+    min="0"
     max="100"
-    value="50"
+    value="0"
     class="myslider"
-    id="fruit_proc"
+    id="veggies"
+    oninput="outputUpdate(value, 'veggie_val')"
   />
-  <input
-    type="range"
-    name="veggie_fresh"
-    min="1"
-    max="100"
-    value="50"
-    class="myslider"
-    id="veggie_fresh"
-  />
-  <input
-    type="range"
-    name="veggie_proc"
-    min="1"
-    max="100"
-    value="50"
-    class="myslider"
-    id="veggie_proc"
-  />
+  <output for="veggies" id="veggie_val">0</output>
+  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+  <label for="milk">Milk</label>
   <input
     type="range"
     name="milk"
-    min="1"
+    min="0"
     max="100"
-    value="50"
+    value="0"
     class="myslider"
     id="milk"
+    oninput="outputUpdate(value, 'milk_val')"
   />
+  <output for="milk" id="milk_val">0</output>
+
+  <br />
+  <label for="dairy">Dairy</label>
   <input
     type="range"
     name="dairy"
-    min="1"
+    min="0"
     max="100"
-    value="50"
+    value="0"
     class="myslider"
     id="dairy"
+    oninput="outputUpdate(value, 'dairy_val')"
   />
+  <output for="dairy" id="dairy_val">0</output>
+  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+  &nbsp &nbsp &nbsp &nbsp &nbsp
+  <label for="meat">Meat</label>
   <input
     type="range"
     name="meat"
-    min="1"
+    min="0"
     max="100"
-    value="50"
+    value="0"
     class="myslider"
     id="meat"
+    oninput="outputUpdate(value, 'meat_val')"
   />
+  <output for="meat" id="meat_val">0</output>
+  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+  <label for="poultry">Poultry</label>
   <input
     type="range"
     name="poultry"
-    min="1"
+    min="0"
     max="100"
-    value="50"
+    value="0"
     class="myslider"
     id="poultry"
+    oninput="outputUpdate(value, 'poultry_val')"
   />
+  <output for="poultry" id="poultry_val">0</output>
+
+  <br />
+  <label for="fish_seafood">Seafood</label>
   <input
     type="range"
     name="fish_seafood"
-    min="1"
+    min="0"
     max="100"
-    value="50"
+    value="0"
     class="myslider"
     id="fish_seafood"
+    oninput="outputUpdate(value, 'fish_seafood_val')"
   />
+  <output for="fish_seafood" id="fish_seafood_val">0</output>
+  &nbsp &nbsp &nbsp &nbsp &nbsp
+  <label for="takeout">Takeout/Leftovers</label>
   <input
     type="range"
-    name="eggs"
-    min="1"
+    name="takeout"
+    min="0"
     max="100"
-    value="50"
+    value="0"
     class="myslider"
-    id="eggs"
+    id="takeout"
+    oninput="outputUpdate(value, 'takeout_val')"
   />
+  <output for="takeout" id="takeout_val">0</output>
+  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+  <label for="other">Misc.</label>
   <input
     type="range"
-    name="nuts"
-    min="1"
+    name="other"
+    min="0"
     max="100"
-    value="50"
+    value="0"
     class="myslider"
-    id="nuts"
+    id="other"
+    oninput="outputUpdate(value, 'other_val')"
   />
-  <input
-    type="range"
-    name="sweet"
-    min="1"
-    max="100"
-    value="50"
-    class="myslider"
-    id="sweet"
-  />
-  <input
-    type="range"
-    name="fats_oils'"
-    min="1"
-    max="100"
-    value="50"
-    class="myslider"
-    id="fats_oils"
-  />
+  <output for="other" id="other_val">0</output>
+
+  <br />
   <br />
   <div align="center">
     <button type="submit" class="btn btn-primary">Add Food</button>
   </div>
 </form>
 {% endblock %}
+
+<!--  -->
