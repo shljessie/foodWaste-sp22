@@ -1,4 +1,6 @@
-# Flask Web App Tutorial
+# Food Waste Data Visualization Study
+
+Final Hosted Website: http://192.241.145.244/login?next=%2F 
 
 ## Setup & Installtion
 
