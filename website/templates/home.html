@@ -17,29 +17,11 @@
   </div>
   
   <script>
-    //import data
-    function get_data() {
-      fetch("/user-data")
-       .then((data) => data.json())
-       .then((user) => { 
-         console.log(user)
-         var data=user;
-
-         
-
-
-         
-      });
-    }
-
-    get_data();
-  
-  
     // set the dimensions and margins of the graph
     var margin = { top: 20, right: 30, bottom: 40, left: 90 },
-      width = 1060 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
-  
+        width = 1060 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+    
     // append the svg object to the body of the page
     var svg = d3
       .select("#fw")
@@ -48,19 +30,15 @@
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-  
-    // create data viz
-  
-    // import data
-  
-    // console.log(dataU);
-  
-    // Parse the Data
-    d3.csv(
-      "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv",
-      function (data) {
-        console.log(data);
-  
+
+    //import data
+    function get_data() {
+      fetch("/user-data")
+       .then((data) => data.json())
+       .then((user) => { 
+        //  console.log(user)
+         var data=user;
+
         // Add X axis
         var x = d3.scaleLinear().domain([0, 3000]).range([0, width]);
         svg
@@ -84,10 +62,53 @@
           "Misc",
         ];
         var y = d3.scale.ordinal().domain(yAxis).rangeRoundBands([20, height]);
-  
         svg.append("g").call(d3.axisLeft(y));
+
+
+        var totalFruit=0; 
+        var totalVegetable=0;
+        var totalMilk=0;
+        var totalDairy=0;
+        var totalMeat=0;
+        var totalPoultry=0;
+        var totalSeafood=0;
+        var totalTakeout=0;
+        var totalMisc=0;
+
+        // parseData
+        data.forEach(function(d) {
+            console.log(d)
+            
+            // getting total values of data
+            totalFruit += d.fruit || 0;
+            totalVegetable += d.vegetables|| 0;
+            totalMilk += d.milk|| 0;
+            totalDairy += d.dairy|| 0;
+            totalMeat += d.meat|| 0;
+            totalPoultry += d.poultry|| 0;
+            totalSeafood += d.seafood|| 0;
+            totalTakeout += d.takeout|| 0;
+            totalMisc += d.misc|| 0;
+
+            console.log('printing data total amounts', 
+              totalFruit, totalVegetable, totalTakeout, totalSeafood,totalMeat,totalMilk,totalPoultry
+            )
+
+        });
+
+      });
+    }
+
+    get_data();
   
-        //Bars
+  
+  
+    // Parse the Data
+    d3.csv(
+      "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv",
+      function (data) {
+  
+        // draw rect
         svg
           .selectAll("fw")
           .data(data)
