@@ -17,18 +17,14 @@
   </div>
   
   <script>
-    // from flask import jsonify;
-  
-    fetch("/user-data").then(() => {
-      user_data = json.dumps(user);
-  
-      console.log(user_data);
-    });
-  
-    function showVal() {}
-  
-    // var PouchDB = require("../database.db");
-    // console.log(PouchDB);
+    //import data
+    function get_data() {
+      fetch("/user-data")
+       .then((data) => data.json())
+       .then((user) => console.log(user));
+    }
+
+    get_data();
   
     // Show Graph
     function showGraph() {
