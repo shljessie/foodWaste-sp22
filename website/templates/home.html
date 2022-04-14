@@ -4,96 +4,110 @@
 <head>
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.0.0/d3.min.js"></script>
-
 </head>
 
 <h1 align="center">Food Waste Data</h1>
 <br />
 
-  <div id="my_dataviz">
-    <div id="fw" style="display:hidden;"></div>
-    <div id="ms"></div>
-    <div id="dp"></div>
-    <div id="gom"></div>
-  </div>
+<div id="my_dataviz">
+  <div id="fw" style="display: hidden"></div>
+  <div id="ms"></div>
+  <div id="dp"></div>
+  <div id="gom"></div>
+</div>
 
+<script>
+  // from flask import jsonify;
 
-  <script>
-    // var PouchDB = require("../database.db");
-    // console.log(PouchDB);
+  fetch("/user-data").then(() => {
+    user_data = json.dumps(user);
 
-    // Show Graph
-    function showGraph() { 
-        console.log('clicked');
-        document.getElementById("fw").style.display="show";
-    }
-   
-    // set the dimensions and margins of the graph
-    var margin = {top: 20, right: 30, bottom: 40, left: 90},
-        width = 1060 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
-    
-    // append the svg object to the body of the page
-    var svg = d3.select("#fw")
-      .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform",
-              "translate(" + margin.left + "," + margin.top + ")");
+    console.log(user_data);
+  });
 
-    // create data viz
-    
+  function showVal() {}
 
-    // import data
-    
-    // console.log(dataU);
+  // var PouchDB = require("../database.db");
+  // console.log(PouchDB);
 
+  // Show Graph
+  function showGraph() {
+    console.log("clicked");
+    document.getElementById("fw").style.display = "show";
+  }
 
+  // set the dimensions and margins of the graph
+  var margin = { top: 20, right: 30, bottom: 40, left: 90 },
+    width = 1060 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
-    
-    // Parse the Data
-    d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv", function(data) {
-    
+  // append the svg object to the body of the page
+  var svg = d3
+    .select("#fw")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  // create data viz
+
+  // import data
+
+  // console.log(dataU);
+
+  // Parse the Data
+  d3.csv(
+    "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv",
+    function (data) {
       console.log(data);
 
       // Add X axis
-      var x = d3.scaleLinear()
-        .domain([0, 3000])
-        .range([ 0, width]);
-      svg.append("g")
+      var x = d3.scaleLinear().domain([0, 3000]).range([0, width]);
+      svg
+        .append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x))
         .selectAll("text")
-          .attr("transform", "translate(-10,0)rotate(-45)")
-          .style("text-anchor", "end");
-    
-      // create y axis
-      var yAxis = ["Fruits", "Vegetables", "Milk", "Dairy", "Meat", "Poultry", "Seafood", "Takeout/Leftovers" , "Misc"]
-      var y = d3.scale.ordinal()
-                    	.domain(yAxis)
-                    	.rangeRoundBands([20,height])
+        .attr("transform", "translate(-10,0)rotate(-45)")
+        .style("text-anchor", "end");
 
-      svg.append("g")
-        .call(d3.axisLeft(y))
-    
+      // create y axis
+      var yAxis = [
+        "Fruits",
+        "Vegetables",
+        "Milk",
+        "Dairy",
+        "Meat",
+        "Poultry",
+        "Seafood",
+        "Takeout/Leftovers",
+        "Misc",
+      ];
+      var y = d3.scale.ordinal().domain(yAxis).rangeRoundBands([20, height]);
+
+      svg.append("g").call(d3.axisLeft(y));
+
       //Bars
-      svg.selectAll("fw")
+      svg
+        .selectAll("fw")
         .data(data)
         .enter()
         .append("rect")
-        .attr("x", x(0) )
-        .attr("y", function(d) { return y(d.Country); })
-        .attr("width", function(d) { return x(d.Value);})
-        .attr("height", y.bandwidth() )
-        .attr("fill", "#69b3a2")
-    
-    })
-    
-    </script>
-    
+        .attr("x", x(0))
+        .attr("y", function (d) {
+          return y(d.Country);
+        })
+        .attr("width", function (d) {
+          return x(d.Value);
+        })
+        .attr("height", y.bandwidth())
+        .attr("fill", "#69b3a2");
+    }
+  );
+</script>
 
-<br/>
+<br />
 <div align="center">
   <table>
     <tr>
@@ -106,7 +120,7 @@
             value="food_waste_CLICK"
           />
           <input type="hidden" name="foodwCLICK" id="foodwCLICK" value="1" />
-          <button type="submit" class="btn btn-secondary" onclick = "">
+          <button type="submit" class="btn btn-secondary" onclick="">
             Total Food Wasted
           </button>
         </form>
@@ -156,33 +170,31 @@
 </div>
 <br />
 
-  <!-- {% for day in user.foodWaste %}
+<!-- {% for day in user.foodWaste %}
   {{ day.fruit }}
   {% endfor %} -->
-  <ul class="list-group list-group-flush" id="notes">
-    {% for day in user.foodWaste %}
-    <li class="list-group-item">
-      {{ day.date }}
-      <button type="button" class="close" onClick="deleteNote({{ day.id }})">
-        <span aria-hidden="true">&times;</span>
-      </button>
-  
-      <script>
-        function deleteNote(noteId) {
-          fetch("/delete-note", {
-            method: "POST",
-            body: JSON.stringify({ noteId: noteId }),
-          }).then((_res) => {
-            window.location.href = "/";
-          });
-        }
-        function showVal() {}
-      </script>
+<ul class="list-group list-group-flush" id="notes">
+  {% for day in user.foodWaste %}
+  <li class="list-group-item">
+    {{ day.date }}
+    <button type="button" class="close" onClick="deleteNote({{ day.id }})">
+      <span aria-hidden="true">&times;</span>
+    </button>
 
-    </li>
-    {% endfor %}
-  </ul>
-
+    <script>
+      function deleteNote(noteId) {
+        fetch("/delete-note", {
+          method: "POST",
+          body: JSON.stringify({ noteId: noteId }),
+        }).then((_res) => {
+          window.location.href = "/";
+        });
+      }
+      function showVal() {}
+    </script>
+  </li>
+  {% endfor %}
+</ul>
 
 <script>
   function outputUpdate(vol, id) {

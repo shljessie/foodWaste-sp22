@@ -5,6 +5,7 @@ from .models import Note
 from .models import UserFoodWaste, UserClicks
 from . import db 
 import json
+from dataclasses import dataclass
 
 views = Blueprint('views', __name__)
 
@@ -67,6 +68,13 @@ def home():
             flash('Showing your Green-O-Meter', category='success')
 
     return render_template("home.html", user=current_user)
+
+
+@views.route('/user-data')
+@login_required
+def user_data():
+  user_data = UserFoodWaste.query.all()
+  return jsonify(user_data)  
 
 
 @views.route('/delete-note', methods=['POST'])
