@@ -1,28 +1,49 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
 %}
 <form method="POST">
-  <h3 align="center">Login</h3>
-  <div class="form-group">
-    <label for="email">Username</label>
-    <input
-      type="email"
-      class="form-control"
-      id="email"
-      name="email"
-      placeholder="Enter username"
-    />
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <br/>
+    <div id="introContainer">
+      <h4 align="center">Food Waste Visualization Study</h4>
+        <p align="center" id="introText"> 
+          Welcome to the Food Waste Visualization Study. :) <br/>
+          Input your Username and Password given to you in the scales.<br/>
+          Please remember to input food waste information each day throughout the duration of the study.<br/>
+          If you have any questions please contact Seonghee Lee(sl994) or Daniela Rodriguez-Chavez (dr537)
+        </p>
+     </div>
+     <br/>
+     <div id="formContainer">
+      <h3 align="center">Login</h3>
+      <div class="form-group">
+        <label for="email">Username</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="Enter username"
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          placeholder="Enter password"
+        />
+      </div>
+      <br />
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
   </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input
-      type="password"
-      class="form-control"
-      id="password"
-      name="password"
-      placeholder="Enter password"
-    />
-  </div>
-  <br />
-  <button type="submit" class="btn btn-primary">Login</button>
-</form>
+  </body>
+</html>
+
 {% endblock %}
