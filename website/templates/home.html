@@ -21,16 +21,19 @@
     function get_data() {
       fetch("/user-data")
        .then((data) => data.json())
-       .then((user) => console.log(user));
+       .then((user) => { 
+         console.log(user)
+         var data=user;
+
+         
+
+
+         
+      });
     }
 
     get_data();
   
-    // Show Graph
-    function showGraph() {
-      console.log("clicked");
-      document.getElementById("fw").style.display = "show";
-    }
   
     // set the dimensions and margins of the graph
     var margin = { top: 20, right: 30, bottom: 40, left: 90 },
