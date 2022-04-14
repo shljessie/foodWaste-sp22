@@ -15,26 +15,16 @@
   <div id="dp"></div>
   <div id="gom"></div>
 </div>
-
 <script>
-  // from flask import jsonify;
-
-  fetch("/user-data").then(() => {
-    user_data = json.dumps(user);
-
-    console.log(user_data);
-  });
-
-  function showVal() {}
-
-  // var PouchDB = require("../database.db");
-  // console.log(PouchDB);
-
-  // Show Graph
-  function showGraph() {
-    console.log("clicked");
-    document.getElementById("fw").style.display = "show";
+  function get_data() {
+    fetch("/user-data")
+      .then((data) => data.json())
+      .then((user) => {
+        return user;
+      });
   }
+
+  get_data();
 
   // set the dimensions and margins of the graph
   var margin = { top: 20, right: 30, bottom: 40, left: 90 },
@@ -54,13 +44,13 @@
 
   // import data
 
-  // console.log(dataU);
+  // console.log(root);
 
   // Parse the Data
   d3.csv(
     "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv",
     function (data) {
-      console.log(data);
+      console.log(get_data());
 
       // Add X axis
       var x = d3.scaleLinear().domain([0, 3000]).range([0, width]);
@@ -120,7 +110,7 @@
             value="food_waste_CLICK"
           />
           <input type="hidden" name="foodwCLICK" id="foodwCLICK" value="1" />
-          <button type="submit" class="btn btn-secondary" onclick="">
+          <button type="submit" class="btn btn-secondary" onClick="showGraph()">
             Total Food Wasted
           </button>
         </form>
@@ -170,9 +160,6 @@
 </div>
 <br />
 
-<!-- {% for day in user.foodWaste %}
-  {{ day.fruit }}
-  {% endfor %} -->
 <ul class="list-group list-group-flush" id="notes">
   {% for day in user.foodWaste %}
   <li class="list-group-item">

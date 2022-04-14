@@ -6,6 +6,8 @@ from .models import UserFoodWaste, UserClicks
 from . import db 
 import json
 from dataclasses import dataclass
+import simplejson
+import jsonpickle 
 
 views = Blueprint('views', __name__)
 
@@ -71,10 +73,9 @@ def home():
 
 
 @views.route('/user-data')
-@login_required
 def user_data():
   user_data = UserFoodWaste.query.all()
-  return jsonify(user_data)  
+  return jsonpickle.encode(user_data)
 
 
 @views.route('/delete-note', methods=['POST'])
