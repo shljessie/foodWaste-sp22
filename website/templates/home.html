@@ -17,19 +17,78 @@
     .yAxisText{
       font-size: 18px;
     }
+    .fw {
+      display: none;
+    }
+    .ms {
+      display: hidden;
+    }
+    .dp {
+      display: hidden;
+    }
+    .gom {
+      display: hidden;
+    }
+    #totalCostTitle{
+      color:green;
+      font-size:20px;
+      padding-left: 20px;
+    }
+    #totalCost{
+      width: 300px;
+      border: 5px solid green;
+      color:green;
+      padding: 50px;
+      margin: 20px;
+    }
   </style>
   
   <h1 align="center">Food Waste Data</h1>
   <br />
   
   <div id="my_dataviz">
-    <div id="fw" style="display: hidden"></div>
-    <div id="ms"></div>
+    <div id="fw" ></div>
+    <div id="ms">
+      <br/>
+      <br/>
+      <p>
+        This Cost Visualization is calculated based on the average cost 
+        of each of food item categories. The price of food in the other category is not considered.
+        <br/>
+        <br/>
+        <p id="totalCostTitle">
+          TotalCost
+        </p>
+        <div id="totalCost"></div>
+      </p>
+    </div>
     <div id="dp"></div>
     <div id="gom"></div>
   </div>
   
   <script>
+    // show hide visualization
+    d3.select("#tfw")
+      .on("click", function () {
+        console.log('selected')
+        d3.select("#fw").style("display", none);
+      })
+
+    function showViz(int){
+      if(int==1){
+        console.log('inhere')
+        document.getElementsByClassName('fw').style.display="none";
+      }if(int ==2){
+
+      }if(int==3){
+
+      }if(int==3){
+
+      }else{
+
+      }
+      
+    }
 
     // set the dimensions and margins of the graph
     var margin = { top: 20, right: 30, bottom: 40, left: 90 },
@@ -226,6 +285,56 @@
 
         });
 
+
+
+        // create cost visualization
+
+        // cost Variables
+        var totalFruitCost=0; 
+        var totalVegetableCost=0;
+        var totalMilkCost=0;
+        var totalDairyCost=0;
+        var totalMeatCost=0;
+        var totalPoultryCost=0;
+        var totalSeafoodCost=0;
+        var totalTakeoutCost=0;
+        var totalMiscCost=0;
+
+
+        // calculate total cost
+        data.forEach(function(d) {
+
+          // getting total values of data
+          totalFruitCost += d.fruit * 0.00156528333 || 0;
+          totalVegetableCost += d.veggies * 0.00141095962|| 0;
+          totalMilkCost += d.milk * 0.00524759596 || 0;
+          totalDairyCost += d.dairy *  0.00524759596 || 0;
+          totalMeatCost += d.meat * 0.01212543431|| 0;
+          totalPoultryCost += d.poultry * 0.00551146384 || 0;
+          totalSeafoodCost += d.fish_seafood * 0.02204585537|| 0;
+          totalTakeoutCost += d.takeout * 0.026 || 0;
+          // totalMiscCost += d.other|| 0;
+
+
+          console.log('printing data total cost', )
+
+
+        });
+
+
+        // display total Money
+
+        // append the svg object to the body of the page
+        var svg2 = d3.select("#ms")
+                      .append("svg")
+                      .attr("width", width + margin.left + margin.right)
+                      .attr("height", height + margin.top + margin.bottom)
+                      .append("g")
+                      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+        // create 
+
       });
     }
 
@@ -245,7 +354,7 @@
               value="food_waste_CLICK"
             />
             <input type="hidden" name="foodwCLICK" id="foodwCLICK" value="1" />
-            <button type="submit" class="btn btn-secondary" onclick="">
+            <button type="submit" class="btn btn-secondary" id ="tfw" onclick="">
               Total Food Wasted
             </button>
           </form>
@@ -456,6 +565,14 @@
       oninput="outputUpdate(value, 'other_val')"
     />
     <output for="other" id="other_val">0</output>
+
+    <script>
+      d3.select("#tfw")
+      .on("click", function () {
+        console.log('selected')
+        d3.select("#fw").style("display", none);
+      })
+    </script>
   
     <br />
     <br />
