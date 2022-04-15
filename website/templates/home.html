@@ -299,7 +299,17 @@
         var totalSeafoodCost=0;
         var totalTakeoutCost=0;
         var totalMiscCost=0;
+        var totalCost=0;
 
+        // append the svg object to the body of the page
+        var svg2 = d3.select("#ms")
+                      .append("svg")
+                      .attr("width", width + margin.left + margin.right)
+                      .attr("height", height + margin.top + margin.bottom)
+                      .append("g")
+                      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        
 
         // calculate total cost
         data.forEach(function(d) {
@@ -313,10 +323,54 @@
           totalPoultryCost += d.poultry * 0.00551146384 || 0;
           totalSeafoodCost += d.fish_seafood * 0.02204585537|| 0;
           totalTakeoutCost += d.takeout * 0.026 || 0;
+          
           // totalMiscCost += d.other|| 0;
 
+          var myObjectCost = [{
+              "name":"Fruit",
+              "value":totalFruitCost,
+            },
+            {
+              "name":"Vegetable",
+              "value":totalVegetableCost,
+            },
+            {
+              "name":"Milk",
+              "value":totalMilkCost,
+            },
+            {
+              "name":"Dairy",
+              "value":totalDairyCost,
+            },
+            {
+              "name":"Meat",
+              "value":totalMeatCost,
+            },
+            {
+              "name":"Poultry",
+              "value":totalPoultryCost,
+            },
+            {
+              "name":"Seafood",
+              "value":totalSeafoodCost,
+            },
+            {
+              "name":"Takeout/Leftovers",
+              "value":totalTakeoutCost,
+            }]
 
-          console.log('printing data total cost', )
+
+          totalCost=myObjectCost.reduce((total, obj) => obj.value + total,0)
+
+
+          console.log('printing data total cost', totalCost)
+
+          var svg2total = d3.select("#totalCost")
+                          .append("text")
+                          .text(totalCost);
+        
+
+        d3.select("#totalCost").text(totalCost);
 
 
         });
@@ -324,14 +378,7 @@
 
         // display total Money
 
-        // append the svg object to the body of the page
-        var svg2 = d3.select("#ms")
-                      .append("svg")
-                      .attr("width", width + margin.left + margin.right)
-                      .attr("height", height + margin.top + margin.bottom)
-                      .append("g")
-                      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+        
 
         // create 
 
