@@ -39,6 +39,7 @@
        .then((user) => { 
         //  console.log(user)
          var data=user;
+        //  console.log(data)
 
         // Add X axis
         var x = d3.scaleLinear().domain([0, 3000]).range([0, width]);
@@ -170,7 +171,9 @@
               totalFruit, totalVegetable, totalTakeout, totalSeafood,totalMeat,totalMilk,totalPoultry
             )
 
-            var myObject = [{
+
+
+        var myObject = [{
               "name":"Fruit",
               "value":totalFruit,
             },
@@ -207,12 +210,12 @@
               "value":totalMisc,
             }]
 
+          
             // x scales
             var x = d3.scaleLinear()
                       .domain([0, 3000])
                       .range([ 0, width]);
 
-           
             //append rects
             svg.selectAll("myRect")
                 .data(myObject)
@@ -302,6 +305,7 @@
     {% for day in user.foodWaste %}
     <li class="list-group-item">
       {{ day.date }}
+      <!-- add more info -->
       <button type="button" class="close" onClick="deleteNote({{ day.id }})">
         <span aria-hidden="true">&times;</span>
       </button>
