@@ -1,10 +1,23 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
   %}
+
+
   
   <head>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.0.0/d3.min.js"></script>
   </head>
+
+  <style>
+    .lines {
+      stroke: lightgrey;
+      stroke-opacity: 0.3;
+      stroke-dasharray: 2,2;
+    }
+    .yAxisText{
+      font-size: 18px;
+    }
+  </style>
   
   <h1 align="center">Food Waste Data</h1>
   <br />
@@ -23,6 +36,10 @@
         width = 1060 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
     
+    // establish gridline basics
+    let xScale = d3.scaleLinear()
+            .domain([0, 3000]).range([0,width]);
+    
     // append the svg object to the body of the page
     var svg = d3
       .select("#fw")
@@ -37,12 +54,11 @@
       fetch("/user-data")
        .then((data) => data.json())
        .then((user) => { 
-        //  console.log(user)
          var data=user;
-        //  console.log(data)
 
         // Add X axis
         var x = d3.scaleLinear().domain([0, 3000]).range([0, width]);
+
         svg
           .append("g")
           .attr("transform", "translate(0," + height + ")")
@@ -50,6 +66,15 @@
           .selectAll("text")
           .attr("transform", "translate(-10,0)rotate(-45)")
           .style("text-anchor", "end");
+        
+        // create gridlines
+        let bottomGridlines = d3.axisBottom(xScale)
+                                .tickFormat('').tickSize(height);
+
+        svg.append('g')
+              .attr('class', 'lines')
+              .attr('transform', `translate(${0}, ${0})`)
+              .call(bottomGridlines);
   
         // parseData
         var totalFruit=0; 
@@ -108,7 +133,9 @@
                       .padding(.1);
 
         svg.append("g")
-              .call(d3.axisLeft(y))
+           .call(d3.axisLeft(y))
+           .selectAll("text")
+           .attr("class","yAxisText")
 
 
         var yAxis = [
@@ -124,51 +151,21 @@
         ];
 
 
-      
-        // parseData1 : grouping by date
-        // var groupedData = d3.group(data, d => d.date console.log());
-        // console.log(groupedData);
-
-        // var totals = d3.nest()
-        //               .key(function(d) {
-        //                 return d.date;
-        //               })
-        //               .rollup(function(d) {
-        //                 return d3.sum(d, function(g) {
-        //                   return g.fruit + g.vegetables + g.milk;
-        //                 });
-        //               })
-        //               .entries(data);
-
-        // console.log('parsed Data', data);
-
-        // parseData
-
         data.forEach(function(d) {
-            // console.log('check d of parsed data',d)
-            // var groupedData = d3.nest()
-            //                     .key(function (d) { return d.milk; })
-            //                     .key(function (d) { return d.fruit; })
-            //                     .entries(data);
-
-            // console.log('totals',groupedData);
-            // var date=d.date;
-
-            // console.log(date);
 
             // getting total values of data
             totalFruit += d.fruit || 0;
-            totalVegetable += d.vegetables|| 0;
+            totalVegetable += d.veggies|| 0;
             totalMilk += d.milk|| 0;
             totalDairy += d.dairy|| 0;
             totalMeat += d.meat|| 0;
             totalPoultry += d.poultry|| 0;
-            totalSeafood += d.seafood|| 0;
+            totalSeafood += d.fish_seafood|| 0;
             totalTakeout += d.takeout|| 0;
-            totalMisc += d.misc|| 0;
+            totalMisc += d.other|| 0;
 
             console.log('printing data total amounts', 
-              totalFruit, totalVegetable, totalTakeout, totalSeafood,totalMeat,totalMilk,totalPoultry
+              totalTakeout, totalMisc
             )
 
 
