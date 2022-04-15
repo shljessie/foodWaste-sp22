@@ -60,6 +60,7 @@
           TotalCost
         </p>
         <div id="totalCost"></div>
+        <div id="top3"></div>
       </p>
     </div>
     <div id="dp"></div>
@@ -365,12 +366,32 @@
 
           console.log('printing data total cost', totalCost)
 
-          var svg2total = d3.select("#totalCost")
+        var svg2total = d3.select("#totalCost")
                           .append("text")
                           .text(totalCost);
-        
 
         d3.select("#totalCost").text(totalCost);
+        console.log('myObject', myObjectCost)
+
+        var result = Object.values(myObjectCost)
+                          .sort((a, b) => a.value - b.value);
+        
+        let topPrice = result[7]
+        let top2Price = result[6]
+        let top3Price = result[5]
+        
+        console.log('Result', result);
+        console.log('topPrice', topPrice);
+        console.log('top2Price', top2Price);
+        console.log('top3Price', top3Price);
+
+        // display top 3 values
+        var svg2total3 = d3.select("#top3")
+                            .append("text")
+                            .text(topPrice.name , ':' , topPrice.value);
+
+        d3.select("#totalCost").text(topPrice.name , ':' , topPrice.value);
+        
 
 
         });
