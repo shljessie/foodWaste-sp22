@@ -223,9 +223,9 @@
             totalTakeout += d.takeout|| 0;
             totalMisc += d.other|| 0;
 
-            console.log('printing data total amounts', 
-              totalTakeout, totalMisc
-            )
+            // console.log('printing data total amounts', 
+            //   totalTakeout, totalMisc
+            // )
 
 
 
@@ -287,7 +287,7 @@
 
 
 
-        // create cost visualization
+        // Total Cost Visualization
 
         // cost Variables
         var totalFruitCost=0; 
@@ -363,7 +363,7 @@
           totalCost=myObjectCost.reduce((total, obj) => obj.value + total,0)
 
 
-          console.log('printing data total cost', totalCost)
+          // console.log('printing data total cost', totalCost)
         
         // display total cost
         var svg2total = d3.select("#totalCost")
@@ -372,7 +372,7 @@
 
         d3.select("#totalCost").text('$ '+totalCost.toFixed(2));
 
-        console.log('myObject', myObjectCost)
+        // console.log('myObject', myObjectCost)
 
         var result = Object.values(myObjectCost)
                           .sort((a, b) => a.value - b.value);
@@ -381,10 +381,10 @@
         let top2Price = result[6]
         let top3Price = result[5]
         
-        console.log('Result', result);
-        console.log('topPrice', topPrice);
-        console.log('top2Price', top2Price);
-        console.log('top3Price', top3Price);
+        // console.log('Result', result);
+        // console.log('topPrice', topPrice);
+        // console.log('top2Price', top2Price);
+        // console.log('top3Price', top3Price);
 
         // display top 3 values
         // top 1
@@ -408,25 +408,100 @@
 
         d3.select("#top3").text(top3Price.name + ' :  '+'$ '+top3Price.value.toFixed(2));
 
-
-        
-
-
         });
+
+
+
+        // GreenOmeter Visualization
+        var svg4 = d3.select("#gom")
+                      .append("svg")
+                      .attr("width", width + margin.left + margin.right)
+                      .attr("height", height + margin.top + margin.bottom)
+                      .append("g")
+                      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
         
-            // show hide visualization
-    d3.select("#dp-btn")
-      .on("click", function () {
-        console.log('selected')
-        vizThree()
-      })
+        // 
+        // console.log('checking for Green',myObject);
 
-        // display total Money
+        // calculate total waste
+        var totalFruit=0; 
+        var totalVegetable=0;
+        var totalMilk=0;
+        var totalDairy=0;
+        var totalMeat=0;
+        var totalPoultry=0;
+        var totalSeafood=0;
+        var totalTakeout=0;
+        var totalMisc=0;
+        var totalWaste=0;
 
-        
+        // calculate total Waste
+        data.forEach(function(d) {
 
-        // create 
+          // getting total values of data
+          totalFruit += d.fruit || 0;
+          totalVegetable += d.veggies|| 0;
+          totalMilk += d.milk|| 0;
+          totalDairy += d.dairy|| 0;
+          totalMeat += d.meat|| 0;
+          totalPoultry += d.poultry|| 0;
+          totalSeafood += d.fish_seafood|| 0;
+          totalTakeout += d.takeout|| 0;
+          totalMisc += d.other|| 0;
+        })
 
+
+        var myObjectGreen = [{
+              "name":"Fruit",
+              "value":totalFruit,
+            },
+            {
+              "name":"Vegetable",
+              "value":totalVegetable,
+            },
+            {
+              "name":"Milk",
+              "value":totalMilk,
+            },
+            {
+              "name":"Dairy",
+              "value":totalDairy,
+            },
+            {
+              "name":"Meat",
+              "value":totalMeat,
+            },
+            {
+              "name":"Poultry",
+              "value":totalPoultry,
+            },
+            {
+              "name":"Seafood",
+              "value":totalSeafood,
+            },
+            {
+              "name":"Takeout/Leftovers",
+              "value":totalTakeout,
+            }]
+
+            totalWaste=myObjectGreen.reduce((total, obj) => obj.value + total,0)
+    
+            console.log('green total Waste', totalWaste)
+
+            if(totalWaste<100){
+              // greenest
+              console.log('greenest');
+              // show different Image
+            }else if(totalWaste<300){
+              // 2nd level green
+              console.log('greenest2');
+            }else if(totalWaste<700){
+              // 3rd level green
+              console.log('greenest3');
+            }else {
+              // 4th level green
+              console.log('greenest4');
+            }
       });
     }
 
