@@ -88,6 +88,9 @@
       background: #04AA6D;
       cursor: pointer;
     }
+    #th_slider{
+      margin:10px;
+    }
   </style>
   
   <h1 align="center"> Your Food Waste Data Record</h1>
@@ -251,8 +254,9 @@
     <br/>
 
 
-    <div id="slidersContainer">
-      <div>
+    <table>
+      <tr>
+      <th id="th_slider">
         <label for="fruit">Fruits</label>
         <input
           type="range"
@@ -265,9 +269,9 @@
           oninput="outputUpdate(value, 'fruit_val')"
         />
         <output for="fruit" id="fruit_val">0</output>
-      </div>
+      </th>
     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-      <div>
+      <th id="th_slider">
         <label for="veggies">Vegetables</label>
         <input
           type="range"
@@ -280,10 +284,10 @@
           oninput="outputUpdate(value, 'veggie_val')"
         />
         <output for="veggies" id="veggie_val">0</output>
-      </div>
+      </th>
     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
     <br />
-    <div>
+    <th id="th_slider">
       <label for="dairy">Dairy</label>
       <input
         type="range"
@@ -296,12 +300,12 @@
         oninput="outputUpdate(value, 'dairy_val')"
       />
       <output for="dairy" id="dairy_val">0</output>
-    </div>
+    </th>
 
     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
     &nbsp &nbsp &nbsp &nbsp &nbsp
 
-    <div>
+    <th id="th_slider">
       <label for="meat">Meat</label>
       <input
         type="range"
@@ -314,11 +318,13 @@
         oninput="outputUpdate(value, 'meat_val')"
       />
       <output for="meat" id="meat_val">0</output>
-    </div>
+    </th>
+    </tr>
+    <tr>
 
     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
 
-    <div>
+    <th id="th_slider">
       <label for="poultry">Poultry</label>
       <input
         type="range"
@@ -331,11 +337,11 @@
         oninput="outputUpdate(value, 'poultry_val')"
       />
       <output for="poultry" id="poultry_val">0</output>
-    </div>
+    </th>
 
     <br />
 
-    <div>
+    <th id="th_slider">
       <label for="fish_seafood">Seafood</label>
       <input
         type="range"
@@ -348,11 +354,11 @@
         oninput="outputUpdate(value, 'fish_seafood_val')"
       />
       <output for="fish_seafood" id="fish_seafood_val">0</output>
-    </div>
+    </th>
 
     &nbsp &nbsp &nbsp &nbsp &nbsp
 
-    <div>
+    <th id="th_slider">
       <label for="takeout">Takeout</label>
       <input
         type="range"
@@ -365,11 +371,11 @@
         oninput="outputUpdate(value, 'takeout_val')"
       />
       <output for="takeout" id="takeout_val">0</output>
-    </div>
+    </th>
 
     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
 
-    <div>
+    <th id="th_slider">
       <label for="other">Other</label>
       <input
         type="range"
@@ -382,11 +388,12 @@
         oninput="outputUpdate(value, 'other_val')"
       />
       <output for="other" id="other_val">0</output>
-     </div>
+     </th>
+    </tr>
 
      <!-- <button id="test"type="button" onclick="showDiv()">clickme</button> -->
 
-  </div>
+  </table>
 
     <script>
 
