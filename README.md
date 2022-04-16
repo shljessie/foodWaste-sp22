@@ -1,6 +1,6 @@
 # Food Waste Data Visualization Study
 
-Final Hosted Website: http://192.241.145.244/login?next=%2F 
+Final Hosted Website: http://192.241.145.244
 
 ![viz1](/website/templates/images/viz1.png)
 ![viz2](/website/templates/images/viz2.png)
