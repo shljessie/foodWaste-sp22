@@ -36,6 +36,11 @@
       width:40%;
       margin:5%;
     }
+    #gom_text{
+      color:red;
+      font-size:20px;
+      text-align: center;
+    }
     #totalCostTitle{
       color:green;
       font-size:20px;
@@ -45,8 +50,10 @@
       width: 300px;
       border: 5px solid green;
       color:green;
-      padding: 50px;
+      padding: 10px;
       margin: 20px;
+      text-align: center;
+      font-size: 50px;
     }
     #smallVizContainer{
       display: flex;
@@ -57,6 +64,9 @@
       margin-left: auto;
       margin-right: auto;
       width: 50%;
+    }
+    #slidersContainer{
+      
     }
   </style>
   
@@ -681,125 +691,145 @@
       id="food_waste_data"
       value="food_waste_data"
     />
-    <label for="fruit">Fruits</label>
-    <input
-      type="range"
-      name="fruit"
-      min="0"
-      max="100"
-      value="0"
-      class="myslider"
-      id="fruit"
-      oninput="outputUpdate(value, 'fruit_val')"
-    />
-    <output for="fruit" id="fruit_val">0</output>
+    <h2>Enter your Food Waste here</h2>
+    <br/>
+    <br/>
+
+
+    <div id="slidersContainer">
+      <div>
+        <label for="fruit">Fruits</label>
+        <input
+          type="range"
+          name="fruit"
+          min="0"
+          max="100"
+          value="0"
+          class="myslider"
+          id="fruit"
+          oninput="outputUpdate(value, 'fruit_val')"
+        />
+        <output for="fruit" id="fruit_val">0</output>
+      </div>
     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-    <label for="veggies">Vegetables</label>
-    <input
-      type="range"
-      name="veggies"
-      min="0"
-      max="100"
-      value="0"
-      class="myslider"
-      id="veggies"
-      oninput="outputUpdate(value, 'veggie_val')"
-    />
-    <output for="veggies" id="veggie_val">0</output>
+      <div>
+        <label for="veggies">Vegetables</label>
+        <input
+          type="range"
+          name="veggies"
+          min="0"
+          max="100"
+          value="0"
+          class="myslider"
+          id="veggies"
+          oninput="outputUpdate(value, 'veggie_val')"
+        />
+        <output for="veggies" id="veggie_val">0</output>
+      </div>
     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-    <!-- <label for="milk">Milk</label>
-    <input
-      type="range"
-      name="milk"
-      min="0"
-      max="100"
-      value="0"
-      class="myslider"
-      id="milk"
-      oninput="outputUpdate(value, 'milk_val')"
-    />
-    <output for="milk" id="milk_val">0</output> -->
-  
     <br />
-    <label for="dairy">Dairy</label>
-    <input
-      type="range"
-      name="dairy"
-      min="0"
-      max="100"
-      value="0"
-      class="myslider"
-      id="dairy"
-      oninput="outputUpdate(value, 'dairy_val')"
-    />
-    <output for="dairy" id="dairy_val">0</output>
+    <div>
+      <label for="dairy">Dairy</label>
+      <input
+        type="range"
+        name="dairy"
+        min="0"
+        max="100"
+        value="0"
+        class="myslider"
+        id="dairy"
+        oninput="outputUpdate(value, 'dairy_val')"
+      />
+      <output for="dairy" id="dairy_val">0</output>
+    </div>
+
     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
     &nbsp &nbsp &nbsp &nbsp &nbsp
-    <label for="meat">Meat</label>
-    <input
-      type="range"
-      name="meat"
-      min="0"
-      max="100"
-      value="0"
-      class="myslider"
-      id="meat"
-      oninput="outputUpdate(value, 'meat_val')"
-    />
-    <output for="meat" id="meat_val">0</output>
+
+    <div>
+      <label for="meat">Meat</label>
+      <input
+        type="range"
+        name="meat"
+        min="0"
+        max="100"
+        value="0"
+        class="myslider"
+        id="meat"
+        oninput="outputUpdate(value, 'meat_val')"
+      />
+      <output for="meat" id="meat_val">0</output>
+    </div>
+
     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-    <label for="poultry">Poultry</label>
-    <input
-      type="range"
-      name="poultry"
-      min="0"
-      max="100"
-      value="0"
-      class="myslider"
-      id="poultry"
-      oninput="outputUpdate(value, 'poultry_val')"
-    />
-    <output for="poultry" id="poultry_val">0</output>
-  
+
+    <div>
+      <label for="poultry">Poultry</label>
+      <input
+        type="range"
+        name="poultry"
+        min="0"
+        max="100"
+        value="0"
+        class="myslider"
+        id="poultry"
+        oninput="outputUpdate(value, 'poultry_val')"
+      />
+      <output for="poultry" id="poultry_val">0</output>
+    </div>
+
     <br />
-    <label for="fish_seafood">Seafood</label>
-    <input
-      type="range"
-      name="fish_seafood"
-      min="0"
-      max="100"
-      value="0"
-      class="myslider"
-      id="fish_seafood"
-      oninput="outputUpdate(value, 'fish_seafood_val')"
-    />
-    <output for="fish_seafood" id="fish_seafood_val">0</output>
+
+    <div>
+      <label for="fish_seafood">Seafood</label>
+      <input
+        type="range"
+        name="fish_seafood"
+        min="0"
+        max="100"
+        value="0"
+        class="myslider"
+        id="fish_seafood"
+        oninput="outputUpdate(value, 'fish_seafood_val')"
+      />
+      <output for="fish_seafood" id="fish_seafood_val">0</output>
+    </div>
+
     &nbsp &nbsp &nbsp &nbsp &nbsp
-    <label for="takeout">Takeout</label>
-    <input
-      type="range"
-      name="takeout"
-      min="0"
-      max="100"
-      value="0"
-      class="myslider"
-      id="takeout"
-      oninput="outputUpdate(value, 'takeout_val')"
-    />
-    <output for="takeout" id="takeout_val">0</output>
+
+    <div>
+      <label for="takeout">Takeout</label>
+      <input
+        type="range"
+        name="takeout"
+        min="0"
+        max="100"
+        value="0"
+        class="myslider"
+        id="takeout"
+        oninput="outputUpdate(value, 'takeout_val')"
+      />
+      <output for="takeout" id="takeout_val">0</output>
+    </div>
+
     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-    <label for="other">Other</label>
-    <input
-      type="range"
-      name="other"
-      min="0"
-      max="100"
-      value="0"
-      class="myslider"
-      id="other"
-      oninput="outputUpdate(value, 'other_val')"
-    />
-    <output for="other" id="other_val">0</output>
+
+    <div>
+      <label for="other">Other</label>
+      <input
+        type="range"
+        name="other"
+        min="0"
+        max="100"
+        value="0"
+        class="myslider"
+        id="other"
+        oninput="outputUpdate(value, 'other_val')"
+      />
+      <output for="other" id="other_val">0</output>
+     </div>
+
+  </div>
 
     <script>
       d3.select("#tfw")
@@ -811,9 +841,13 @@
   
     <br />
     <br />
+    <br/>
     <div align="center">
-      <button type="submit" class="btn btn-primary">Add Food</button>
+      <button type="submit" class="btn btn-primary">Enter Food Waste</button>
     </div>
+    <br />
+    <br />
+    <br/>
 
   </form>
   {% endblock %}
