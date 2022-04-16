@@ -70,9 +70,6 @@
   <h1 align="center"> Your Food Waste Data Record</h1>
   <br />
   <br />
-  <!-- <p>
-    Total Food Waste by Category
-  </p> -->
   
   <div id="my_dataviz">
     <div id="fw" style="" >
@@ -118,7 +115,10 @@
   
   <script>
 
-    var show = 2;
+    function showViz(){
+      document.getElementById(fw).style.display('block');
+    }
+
 
     // set the dimensions and margins of the graph
     var margin = { top: 20, right: 30, bottom: 40, left: 90 },
@@ -142,8 +142,6 @@
     }
     
     // append the svg object to the body of the page
-    
-      console.log('here')
       var svg = d3
       .select("#fw")
       .append("svg")
@@ -261,17 +259,12 @@
             // getting total values of data
             totalFruit += d.fruit || 0;
             totalVegetable += d.veggies|| 0;
-            // totalMilk += d.milk|| 0;
             totalDairy += d.dairy|| 0;
             totalMeat += d.meat|| 0;
             totalPoultry += d.poultry|| 0;
             totalSeafood += d.fish_seafood|| 0;
             totalTakeout += d.takeout|| 0;
             totalOther += d.other|| 0;
-
-            // console.log('printing data total amounts', 
-            //   totalTakeout, totalMisc
-            // )
 
 
 
@@ -283,10 +276,6 @@
               "name":"Vegetable",
               "value":totalVegetable,
             },
-            // {
-            //   "name":"Milk",
-            //   "value":totalMilk,
-            // },
             {
               "name":"Dairy",
               "value":totalDairy,
@@ -338,7 +327,6 @@
         // cost Variables
         var totalFruitCost=0; 
         var totalVegetableCost=0;
-        // var totalMilkCost=0;
         var totalDairyCost=0;
         var totalMeatCost=0;
         var totalPoultryCost=0;
@@ -346,15 +334,6 @@
         var totalTakeoutCost=0;
         var totalOtherCost=0;
         var totalCost=0;
-
-        // append the svg object to the body of the page
-        // var svg2 = d3.select("#ms")
-        //               .append("svg")
-        //               .attr("width", width + margin.left + margin.right)
-        //               .attr("height", height + margin.top + margin.bottom)
-        //               .append("g")
-        //               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
         
 
         // calculate total cost
@@ -363,14 +342,12 @@
           // getting total values of data
           totalFruitCost += d.fruit * 0.00156528333 || 0;
           totalVegetableCost += d.veggies * 0.00141095962|| 0;
-          // totalMilkCost += d.milk * 0.00524759596 || 0;
           totalDairyCost += d.dairy *  0.00524759596 || 0;
           totalMeatCost += d.meat * 0.01212543431|| 0;
           totalPoultryCost += d.poultry * 0.00551146384 || 0;
           totalSeafoodCost += d.fish_seafood * 0.02204585537|| 0;
           totalTakeoutCost += d.takeout * 0.026 || 0;
-          
-          // totalMiscCost += d.other|| 0;
+
 
           var myObjectCost = [{
               "name":"Fruit",
@@ -380,10 +357,6 @@
               "name":"Vegetable",
               "value":totalVegetableCost,
             },
-            // {
-            //   "name":"Milk",
-            //   "value":totalMilkCost,
-            // },
             {
               "name":"Dairy",
               "value":totalDairyCost,
@@ -408,8 +381,6 @@
 
           totalCost=myObjectCost.reduce((total, obj) => obj.value + total,0)
 
-
-          // console.log('printing data total cost', totalCost)
         
         // display total cost
         var svg2total = d3.select("#totalCost")
@@ -418,7 +389,6 @@
 
         d3.select("#totalCost").text('$ '+totalCost.toFixed(2));
 
-        // console.log('myObject', myObjectCost)
 
         var result = Object.values(myObjectCost)
                           .sort((a, b) => a.value - b.value);
@@ -426,11 +396,7 @@
         let topPrice = result[6]
         let top2Price = result[5]
         let top3Price = result[4]
-        
-        // console.log('Result', result);
-        // console.log('topPrice', topPrice);
-        // console.log('top2Price', top2Price);
-        // console.log('top3Price', top3Price);
+
 
         // display top 3 values
         // top 1
@@ -456,23 +422,9 @@
 
         });
 
-
-
-        // GreenOmeter Visualization
-        // var svg4 = d3.select("#gom")
-        //               .append("svg")
-        //               .attr("width", width + margin.left + margin.right)
-        //               .attr("height", height + margin.top + margin.bottom)
-        //               .append("g")
-        //               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        
-        // 
-        // console.log('checking for Green',myObject);
-
         // calculate total waste
         var totalFruit=0; 
         var totalVegetable=0;
-        // var totalMilk=0;
         var totalDairy=0;
         var totalMeat=0;
         var totalPoultry=0;
@@ -487,7 +439,6 @@
           // getting total values of data
           totalFruit += d.fruit || 0;
           totalVegetable += d.veggies|| 0;
-          // totalMilk += d.milk|| 0;
           totalDairy += d.dairy|| 0;
           totalMeat += d.meat|| 0;
           totalPoultry += d.poultry|| 0;
@@ -505,10 +456,6 @@
               "name":"Vegetable",
               "value":totalVegetable,
             },
-            // {
-            //   "name":"Milk",
-            //   "value":totalMilk,
-            // },
             {
               "name":"Dairy",
               "value":totalDairy,
