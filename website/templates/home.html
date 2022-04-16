@@ -23,19 +23,23 @@
       display: none;
       /* visibility: hidden; */
     }
-    .ms {
+    #ms {
       display: hidden;
+      width:40%;
+      margin:5%;
     }
     .dp {
       display: hidden;
     }
-    .gom {
+    #gom {
       display: hidden;
+      width:40%;
+      margin:5%;
     }
     #totalCostTitle{
       color:green;
       font-size:20px;
-      padding-left: 20px;
+      /* padding-left: 20px; */
     }
     #totalCost{
       width: 300px;
@@ -44,34 +48,60 @@
       padding: 50px;
       margin: 20px;
     }
+    #smallVizContainer{
+      display: flex;
+      flex-direction: row;
+    }
+    img{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
   </style>
   
-  <h1 align="center">Food Waste Data</h1>
+  <h1 align="center"> Your Food Waste Data Record</h1>
   <br />
+  <br />
+  <!-- <p>
+    Total Food Waste by Category
+  </p> -->
   
   <div id="my_dataviz">
-    <div id="fw" style="" ></div>
+    <div id="fw" style="" >
+      <p id="totalCostTitle">
+        Total Food Waste by Category
+      </p>
+    </div>
 
 
-    <div>
+    <div id="smallVizContainer">
       <div id="ms">
-        <br/>
-        <br/>
+
         <p>
-          This Cost Visualization is calculated based on the average cost 
-          of each of food item categories. The price of food in the other category is not considered.
-          <br/>
-          <br/>
           <p id="totalCostTitle">
             Total Cost of Your Food Waste
           </p>
+          <p>    This Cost Visualization is calculated based on the average cost 
+            of each of food item categories. The price of food in the other category is not considered.</p>
           <div id="totalCost"></div>
+          <p id="totalCostTitle">
+            Top 3 Food Waste Costs
+          </p>
           <div id="top1"></div>
           <div id="top2"></div>
           <div id="top3"></div>
         </p>
       </div>
       <div id="gom">
+        <br/>
+
+        <p id="totalCostTitle">
+          Green-O-Meter
+        </p>
+        <p>
+          How Green is your food waste? This metric is calculated based on 
+        </p>
         <p id="gom_text"></p>
       </div>
     </div>
@@ -287,10 +317,10 @@
                 .enter()
                 .append("rect")
                 .attr("x", x(0) )
-                .attr("y", function(d) { return y(d.name); })
+                .attr("y", function(d) { return y(d.name)+11 ; })
                 .attr("width", function(d) { console.log(d.value); return x(d.value); })
                 .attr("height", 30 )
-                .attr("fill", "#69b3a2")
+                .attr("fill", "pink")
 
         });
 
@@ -527,7 +557,7 @@
               // https://drive.google.com/file/d/1SoPd_xkb94UGVnOaGShdbQf16yYGHzjI/view?usp=sharing
               img.src = 'https://drive.google.com/uc?export=view&id=1SoPd_xkb94UGVnOaGShdbQf16yYGHzjI';
               console.log(img)
-              document.getElementById('gom').appendChild(img);
+              document.getElementById('gom').appendChild(img).attr("class",'greenImage');
               d3.select("#gom_text").append('text').text('Level Three Do Better!');
             }else{
               // 4th level green
