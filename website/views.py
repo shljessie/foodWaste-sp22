@@ -19,7 +19,6 @@ def home():
         if form == "food_waste_data":
             fruit = request.form.get('fruit')
             veggies = request.form.get('veggies')
-            milk = request.form.get('milk') 
             dairy = request.form.get('dairy')
             meat = request.form.get('meat')
             poultry = request.form.get('poultry')
@@ -28,7 +27,7 @@ def home():
             other = request.form.get('other')
 
             new_note = UserFoodWaste(fruit=fruit, veggies=veggies, 
-                                        milk=milk, dairy=dairy, meat=meat, poultry=poultry, 
+                                        dairy=dairy, meat=meat, poultry=poultry, 
                                         fish_seafood=fish_seafood, takeout=takeout, other=other,
                                         user_id=current_user.id) 
 

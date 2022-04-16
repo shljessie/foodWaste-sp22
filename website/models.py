@@ -29,7 +29,6 @@ class UserFoodWaste(db.Model):
     date = db.Column(db.DateTime(timezone=True), default=datetime.now)
     fruit= db.Column(db.Integer)
     veggies = db.Column(db.Integer)
-    milk = db.Column(db.Integer)
     dairy = db.Column(db.Integer)
     meat = db.Column(db.Integer)
     poultry = db.Column(db.Integer)

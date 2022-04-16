@@ -51,27 +51,32 @@
   
   <div id="my_dataviz">
     <div id="fw" style="" ></div>
-    <div id="ms">
-      <br/>
-      <br/>
-      <p>
-        This Cost Visualization is calculated based on the average cost 
-        of each of food item categories. The price of food in the other category is not considered.
+
+
+    <div>
+      <div id="ms">
         <br/>
         <br/>
-        <p id="totalCostTitle">
-          Total Cost of Your Food Waste
+        <p>
+          This Cost Visualization is calculated based on the average cost 
+          of each of food item categories. The price of food in the other category is not considered.
+          <br/>
+          <br/>
+          <p id="totalCostTitle">
+            Total Cost of Your Food Waste
+          </p>
+          <div id="totalCost"></div>
+          <div id="top1"></div>
+          <div id="top2"></div>
+          <div id="top3"></div>
         </p>
-        <div id="totalCost"></div>
-        <div id="top1"></div>
-        <div id="top2"></div>
-        <div id="top3"></div>
-      </p>
+      </div>
+      <div id="gom">
+        <p id="gom_text"></p>
+      </div>
     </div>
+    
     <div id="dp"></div>
-    <div id="gom">
-      <p id="gom_text"></p>
-    </div>
   </div>
   
   <script>
@@ -142,13 +147,13 @@
         // parseData
         var totalFruit=0; 
         var totalVegetable=0;
-        var totalMilk=0;
+        // var totalMilk=0;
         var totalDairy=0;
         var totalMeat=0;
         var totalPoultry=0;
         var totalSeafood=0;
         var totalTakeout=0;
-        var totalMisc=0;
+        var totalOther=0;
 
 
         var myObject = [{
@@ -159,10 +164,10 @@
               "name":"Vegetable",
               "value":totalVegetable,
             },
-            {
-              "name":"Milk",
-              "value":totalMilk,
-            },
+            // {
+            //   "name":"Milk",
+            //   "value":totalMilk,
+            // },
             {
               "name":"Dairy",
               "value":totalDairy,
@@ -180,12 +185,12 @@
               "value":totalSeafood,
             },
             {
-              "name":"Takeout/Leftovers",
+              "name":"Takeout",
               "value":totalTakeout,
             },
             {
-              "name":"Misc",
-              "value":totalMisc,
+              "name":"Other",
+              "value":totalOther,
             }]
 
 
@@ -204,13 +209,13 @@
         var yAxis = [
           "Fruits",
           "Vegetables",
-          "Milk",
+          // "Milk",
           "Dairy",
           "Meat",
           "Poultry",
           "Seafood",
-          "Takeout/Leftovers",
-          "Misc",
+          "Takeout",
+          "Other",
         ];
 
 
@@ -219,13 +224,13 @@
             // getting total values of data
             totalFruit += d.fruit || 0;
             totalVegetable += d.veggies|| 0;
-            totalMilk += d.milk|| 0;
+            // totalMilk += d.milk|| 0;
             totalDairy += d.dairy|| 0;
             totalMeat += d.meat|| 0;
             totalPoultry += d.poultry|| 0;
             totalSeafood += d.fish_seafood|| 0;
             totalTakeout += d.takeout|| 0;
-            totalMisc += d.other|| 0;
+            totalOther += d.other|| 0;
 
             // console.log('printing data total amounts', 
             //   totalTakeout, totalMisc
@@ -241,10 +246,10 @@
               "name":"Vegetable",
               "value":totalVegetable,
             },
-            {
-              "name":"Milk",
-              "value":totalMilk,
-            },
+            // {
+            //   "name":"Milk",
+            //   "value":totalMilk,
+            // },
             {
               "name":"Dairy",
               "value":totalDairy,
@@ -262,12 +267,12 @@
               "value":totalSeafood,
             },
             {
-              "name":"Takeout/Leftovers",
+              "name":"Takeout",
               "value":totalTakeout,
             },
             {
-              "name":"Misc",
-              "value":totalMisc,
+              "name":"Other",
+              "value":totalOther,
             }]
 
           
@@ -296,22 +301,22 @@
         // cost Variables
         var totalFruitCost=0; 
         var totalVegetableCost=0;
-        var totalMilkCost=0;
+        // var totalMilkCost=0;
         var totalDairyCost=0;
         var totalMeatCost=0;
         var totalPoultryCost=0;
         var totalSeafoodCost=0;
         var totalTakeoutCost=0;
-        var totalMiscCost=0;
+        var totalOtherCost=0;
         var totalCost=0;
 
         // append the svg object to the body of the page
-        var svg2 = d3.select("#ms")
-                      .append("svg")
-                      .attr("width", width + margin.left + margin.right)
-                      .attr("height", height + margin.top + margin.bottom)
-                      .append("g")
-                      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        // var svg2 = d3.select("#ms")
+        //               .append("svg")
+        //               .attr("width", width + margin.left + margin.right)
+        //               .attr("height", height + margin.top + margin.bottom)
+        //               .append("g")
+        //               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         
 
@@ -321,7 +326,7 @@
           // getting total values of data
           totalFruitCost += d.fruit * 0.00156528333 || 0;
           totalVegetableCost += d.veggies * 0.00141095962|| 0;
-          totalMilkCost += d.milk * 0.00524759596 || 0;
+          // totalMilkCost += d.milk * 0.00524759596 || 0;
           totalDairyCost += d.dairy *  0.00524759596 || 0;
           totalMeatCost += d.meat * 0.01212543431|| 0;
           totalPoultryCost += d.poultry * 0.00551146384 || 0;
@@ -338,10 +343,10 @@
               "name":"Vegetable",
               "value":totalVegetableCost,
             },
-            {
-              "name":"Milk",
-              "value":totalMilkCost,
-            },
+            // {
+            //   "name":"Milk",
+            //   "value":totalMilkCost,
+            // },
             {
               "name":"Dairy",
               "value":totalDairyCost,
@@ -359,7 +364,7 @@
               "value":totalSeafoodCost,
             },
             {
-              "name":"Takeout/Leftovers",
+              "name":"Takeout",
               "value":totalTakeoutCost,
             }]
 
@@ -381,9 +386,9 @@
         var result = Object.values(myObjectCost)
                           .sort((a, b) => a.value - b.value);
         
-        let topPrice = result[7]
-        let top2Price = result[6]
-        let top3Price = result[5]
+        let topPrice = result[6]
+        let top2Price = result[5]
+        let top3Price = result[4]
         
         // console.log('Result', result);
         // console.log('topPrice', topPrice);
@@ -430,13 +435,13 @@
         // calculate total waste
         var totalFruit=0; 
         var totalVegetable=0;
-        var totalMilk=0;
+        // var totalMilk=0;
         var totalDairy=0;
         var totalMeat=0;
         var totalPoultry=0;
         var totalSeafood=0;
         var totalTakeout=0;
-        var totalMisc=0;
+        var totalOther=0;
         var totalWaste=0;
 
         // calculate total Waste
@@ -445,13 +450,13 @@
           // getting total values of data
           totalFruit += d.fruit || 0;
           totalVegetable += d.veggies|| 0;
-          totalMilk += d.milk|| 0;
+          // totalMilk += d.milk|| 0;
           totalDairy += d.dairy|| 0;
           totalMeat += d.meat|| 0;
           totalPoultry += d.poultry|| 0;
           totalSeafood += d.fish_seafood|| 0;
           totalTakeout += d.takeout|| 0;
-          totalMisc += d.other|| 0;
+          totalOther += d.other|| 0;
         })
 
 
@@ -463,10 +468,10 @@
               "name":"Vegetable",
               "value":totalVegetable,
             },
-            {
-              "name":"Milk",
-              "value":totalMilk,
-            },
+            // {
+            //   "name":"Milk",
+            //   "value":totalMilk,
+            // },
             {
               "name":"Dairy",
               "value":totalDairy,
@@ -484,7 +489,7 @@
               "value":totalSeafood,
             },
             {
-              "name":"Takeout/Leftovers",
+              "name":"Takeout",
               "value":totalTakeout,
             }]
 
@@ -672,7 +677,7 @@
     />
     <output for="veggies" id="veggie_val">0</output>
     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-    <label for="milk">Milk</label>
+    <!-- <label for="milk">Milk</label>
     <input
       type="range"
       name="milk"
@@ -683,7 +688,7 @@
       id="milk"
       oninput="outputUpdate(value, 'milk_val')"
     />
-    <output for="milk" id="milk_val">0</output>
+    <output for="milk" id="milk_val">0</output> -->
   
     <br />
     <label for="dairy">Dairy</label>
@@ -740,7 +745,7 @@
     />
     <output for="fish_seafood" id="fish_seafood_val">0</output>
     &nbsp &nbsp &nbsp &nbsp &nbsp
-    <label for="takeout">Takeout/Leftovers</label>
+    <label for="takeout">Takeout</label>
     <input
       type="range"
       name="takeout"
@@ -753,7 +758,7 @@
     />
     <output for="takeout" id="takeout_val">0</output>
     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-    <label for="other">Misc.</label>
+    <label for="other">Other</label>
     <input
       type="range"
       name="other"
