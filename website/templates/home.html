@@ -114,12 +114,6 @@
   </div>
   
   <script>
-
-    function showViz(){
-      document.getElementById(fw).style.display('block');
-    }
-
-
     // set the dimensions and margins of the graph
     var margin = { top: 20, right: 30, bottom: 40, left: 90 },
         width = 1060 - margin.left - margin.right,
@@ -593,13 +587,26 @@
   </div>
   <br />
   
-  <!-- {% for day in user.foodWaste %}
-    {{ day.fruit }}
-    {% endfor %} -->
   <ul class="list-group list-group-flush" id="notes">
     {% for day in user.foodWaste %}
     <li class="list-group-item">
-      {{ day.date }}
+      {{ day.date.strftime("%m/%d/%Y, %H:%M:%S") }}
+      &nbsp 
+      Fruit: {{day.fruit}}
+      &nbsp 
+      Vegetable: {{day.vegetables}}
+      &nbsp 
+      Dairy: {{day.dairy}}
+      &nbsp 
+      Meat: {{day.meat}}
+      &nbsp 
+      Poultry: {{day.poultry}}
+      &nbsp 
+      Seafood: {{day.seafood}}
+      &nbsp 
+      Takeout: {{day.takeout}}
+      &nbsp 
+      Other: {{day.other}}
       <!-- add more info -->
       <button type="button" class="close" onClick="deleteNote({{ day.id }})">
         <span aria-hidden="true">&times;</span>
