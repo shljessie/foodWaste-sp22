@@ -41,14 +41,14 @@
       text-align: center;
     }
     #totalCostTitle{
-      color:green;
+      color:red;
       font-size:20px;
       /* padding-left: 20px; */
     }
     #totalCost{
       width: 300px;
-      border: 5px solid green;
-      color:green;
+      border: 5px solid red;
+      color:red;
       padding: 10px;
       margin: 20px;
       text-align: center;
@@ -90,6 +90,10 @@
     }
     #th_slider{
       margin:10px;
+    }
+    #sliderContainer{
+      border-collapse:separate; 
+      border-spacing:5em;
     }
   </style>
   
@@ -249,12 +253,9 @@
       id="food_waste_data"
       value="food_waste_data"
     />
-    <h2>Enter your Food Waste here</h2>
-    <br/>
-    <br/>
+    <h3 style="display: center">Enter your Food Waste here</h3>
 
-
-    <table>
+    <table id="sliderContainer">
       <tr>
       <th id="th_slider">
         <label for="fruit">Fruits</label>
@@ -491,6 +492,8 @@
        .then((user) => { 
          var data=user;
 
+
+
         // Add X axis
         var x = d3.scaleLinear().domain([0, 3000]).range([0, width]);
 
@@ -587,6 +590,8 @@
 
 
         data.forEach(function(d) {
+
+          console.log(d.date);
 
             // getting total values of data
             totalFruit += d.fruit || 0;
