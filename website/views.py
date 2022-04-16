@@ -6,8 +6,7 @@ from .models import UserFoodWaste, UserClicks
 from . import db 
 import json
 from dataclasses import dataclass
-import simplejson
-import jsonpickle 
+import jsonpickle
 
 views = Blueprint('views', __name__)
 
@@ -20,7 +19,6 @@ def home():
         if form == "food_waste_data":
             fruit = request.form.get('fruit')
             veggies = request.form.get('veggies')
-            milk = request.form.get('milk') 
             dairy = request.form.get('dairy')
             meat = request.form.get('meat')
             poultry = request.form.get('poultry')
@@ -29,7 +27,7 @@ def home():
             other = request.form.get('other')
 
             new_note = UserFoodWaste(fruit=fruit, veggies=veggies, 
-                                        milk=milk, dairy=dairy, meat=meat, poultry=poultry, 
+                                        dairy=dairy, meat=meat, poultry=poultry, 
                                         fish_seafood=fish_seafood, takeout=takeout, other=other,
                                         user_id=current_user.id) 
 
@@ -73,6 +71,7 @@ def home():
 
 
 @views.route('/user-data')
+@login_required
 def user_data():
   user_data = UserFoodWaste.query.all()
   return jsonpickle.encode(user_data)
