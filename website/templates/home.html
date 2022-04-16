@@ -1,329 +1,820 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-%}
+  %}
 
-<head>
-  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.0.0/d3.min.js"></script>
-</head>
 
-<h1 align="center">Food Waste Data</h1>
-<br />
+  
+  <head>
+    <meta charset="UTF-8">
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.0.0/d3.min.js"></script>
+    
+  </head>
 
-<div id="my_dataviz">
-  <div id="fw" style="display: hidden"></div>
-  <div id="ms"></div>
-  <div id="dp"></div>
-  <div id="gom"></div>
-</div>
-<script>
-  function get_data() {
-    fetch("/user-data")
-      .then((data) => data.json())
-      .then((user) => {
-        return user;
-      });
-  }
-
-  get_data();
-
-  // set the dimensions and margins of the graph
-  var margin = { top: 20, right: 30, bottom: 40, left: 90 },
-    width = 1060 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-  // append the svg object to the body of the page
-  var svg = d3
-    .select("#fw")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  // create data viz
-
-  // import data
-
-  // console.log(root);
-
-  // Parse the Data
-  d3.csv(
-    "https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv",
-    function (data) {
-      console.log(get_data());
-
-      // Add X axis
-      var x = d3.scaleLinear().domain([0, 3000]).range([0, width]);
-      svg
-        .append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x))
-        .selectAll("text")
-        .attr("transform", "translate(-10,0)rotate(-45)")
-        .style("text-anchor", "end");
-
-      // create y axis
-      var yAxis = [
-        "Fruits",
-        "Vegetables",
-        "Milk",
-        "Dairy",
-        "Meat",
-        "Poultry",
-        "Seafood",
-        "Takeout/Leftovers",
-        "Misc",
-      ];
-      var y = d3.scale.ordinal().domain(yAxis).rangeRoundBands([20, height]);
-
-      svg.append("g").call(d3.axisLeft(y));
-
-      //Bars
-      svg
-        .selectAll("fw")
-        .data(data)
-        .enter()
-        .append("rect")
-        .attr("x", x(0))
-        .attr("y", function (d) {
-          return y(d.Country);
-        })
-        .attr("width", function (d) {
-          return x(d.Value);
-        })
-        .attr("height", y.bandwidth())
-        .attr("fill", "#69b3a2");
+  <style>
+    .lines {
+      stroke: lightgrey;
+      stroke-opacity: 0.3;
+      stroke-dasharray: 2,2;
     }
-  );
-</script>
-
-<br />
-<div align="center">
-  <table>
-    <tr>
-      <th>
-        <form method="POST">
-          <input
-            type="hidden"
-            name="food_waste_CLICK"
-            id="food_waste_CLICK"
-            value="food_waste_CLICK"
-          />
-          <input type="hidden" name="foodwCLICK" id="foodwCLICK" value="1" />
-          <button type="submit" class="btn btn-secondary" onClick="showGraph()">
-            Total Food Wasted
-          </button>
-        </form>
-      </th>
-      <th>
-        <form method="POST">
-          <input
-            type="hidden"
-            name="money_spent_CLICK"
-            id="money_spent_CLICK"
-            value="money_spent_CLICK"
-          />
-          <input type="hidden" name="monwCLICK" id="monwCLICK" value="1" />
-          <button type="submit" class="btn btn-secondary">
-            Total Money Spent
-          </button>
-        </form>
-      </th>
-      <th>
-        <form method="POST">
-          <input
-            type="hidden"
-            name="daily_progress_CLICK"
-            id="daily_progress_CLICK"
-            value="daily_progress_CLICK"
-          />
-          <input type="hidden" name="progCLICK" id="progCLICK" value="1" />
-          <button type="submit" class="btn btn-secondary">
-            Daily Progress
-          </button>
-        </form>
-      </th>
-      <th>
-        <form method="POST">
-          <input
-            type="hidden"
-            name="green_o_meter_CLICK"
-            id="green_o_meter_CLICK"
-            value="green_o_meter_CLICK"
-          />
-          <input type="hidden" name="gomCLICK" id="gomCLICK" value="1" />
-          <button type="submit" class="btn btn-secondary">Green-O-Meter</button>
-        </form>
-      </th>
-    </tr>
-  </table>
-</div>
-<br />
-
-<ul class="list-group list-group-flush" id="notes">
-  {% for day in user.foodWaste %}
-  <li class="list-group-item">
-    {{ day.date }}
-    <button type="button" class="close" onClick="deleteNote({{ day.id }})">
-      <span aria-hidden="true">&times;</span>
-    </button>
-
-    <script>
-      function deleteNote(noteId) {
-        fetch("/delete-note", {
-          method: "POST",
-          body: JSON.stringify({ noteId: noteId }),
-        }).then((_res) => {
-          window.location.href = "/";
-        });
-      }
-      function showVal() {}
-    </script>
-  </li>
-  {% endfor %}
-</ul>
-
-<script>
-  function outputUpdate(vol, id) {
-    document.querySelector("#" + id).value = vol;
-  }
-</script>
-
-<br />
-
-<form method="POST">
-  <input
-    type="hidden"
-    name="food_waste_data"
-    id="food_waste_data"
-    value="food_waste_data"
-  />
-  <label for="fruit">Fruits</label>
-  <input
-    type="range"
-    name="fruit"
-    min="0"
-    max="100"
-    value="0"
-    class="myslider"
-    id="fruit"
-    oninput="outputUpdate(value, 'fruit_val')"
-  />
-  <output for="fruit" id="fruit_val">0</output>
-  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-  <label for="veggies">Vegetables</label>
-  <input
-    type="range"
-    name="veggies"
-    min="0"
-    max="100"
-    value="0"
-    class="myslider"
-    id="veggies"
-    oninput="outputUpdate(value, 'veggie_val')"
-  />
-  <output for="veggies" id="veggie_val">0</output>
-  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-  <label for="milk">Milk</label>
-  <input
-    type="range"
-    name="milk"
-    min="0"
-    max="100"
-    value="0"
-    class="myslider"
-    id="milk"
-    oninput="outputUpdate(value, 'milk_val')"
-  />
-  <output for="milk" id="milk_val">0</output>
-
+    .yAxisText{
+      font-size: 18px;
+    }
+    #fw {
+      /* display: none; */
+      /* visibility: hidden; */
+    }
+    #ms {
+      width:40%;
+      margin:5%;
+    }
+    #dp {
+    }
+    #gom {
+      width:40%;
+      margin:5%;
+    }
+    #gom_text{
+      color:red;
+      font-size:20px;
+      text-align: center;
+    }
+    #totalCostTitle{
+      color:green;
+      font-size:20px;
+      /* padding-left: 20px; */
+    }
+    #totalCost{
+      width: 300px;
+      border: 5px solid green;
+      color:green;
+      padding: 10px;
+      margin: 20px;
+      text-align: center;
+      font-size: 50px;
+    }
+    #smallVizContainer{
+      display: flex;
+      flex-direction: row;
+    }
+    img{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+    #slidersContainer{
+      
+    }
+  </style>
+  
+  <h1 align="center"> Your Food Waste Data Record</h1>
   <br />
-  <label for="dairy">Dairy</label>
-  <input
-    type="range"
-    name="dairy"
-    min="0"
-    max="100"
-    value="0"
-    class="myslider"
-    id="dairy"
-    oninput="outputUpdate(value, 'dairy_val')"
-  />
-  <output for="dairy" id="dairy_val">0</output>
-  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-  &nbsp &nbsp &nbsp &nbsp &nbsp
-  <label for="meat">Meat</label>
-  <input
-    type="range"
-    name="meat"
-    min="0"
-    max="100"
-    value="0"
-    class="myslider"
-    id="meat"
-    oninput="outputUpdate(value, 'meat_val')"
-  />
-  <output for="meat" id="meat_val">0</output>
-  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-  <label for="poultry">Poultry</label>
-  <input
-    type="range"
-    name="poultry"
-    min="0"
-    max="100"
-    value="0"
-    class="myslider"
-    id="poultry"
-    oninput="outputUpdate(value, 'poultry_val')"
-  />
-  <output for="poultry" id="poultry_val">0</output>
-
   <br />
-  <label for="fish_seafood">Seafood</label>
-  <input
-    type="range"
-    name="fish_seafood"
-    min="0"
-    max="100"
-    value="0"
-    class="myslider"
-    id="fish_seafood"
-    oninput="outputUpdate(value, 'fish_seafood_val')"
-  />
-  <output for="fish_seafood" id="fish_seafood_val">0</output>
-  &nbsp &nbsp &nbsp &nbsp &nbsp
-  <label for="takeout">Takeout/Leftovers</label>
-  <input
-    type="range"
-    name="takeout"
-    min="0"
-    max="100"
-    value="0"
-    class="myslider"
-    id="takeout"
-    oninput="outputUpdate(value, 'takeout_val')"
-  />
-  <output for="takeout" id="takeout_val">0</output>
-  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
-  <label for="other">Misc.</label>
-  <input
-    type="range"
-    name="other"
-    min="0"
-    max="100"
-    value="0"
-    class="myslider"
-    id="other"
-    oninput="outputUpdate(value, 'other_val')"
-  />
-  <output for="other" id="other_val">0</output>
+  
+  <div id="my_dataviz">
+    <div id="fw" style="" >
+      <p id="totalCostTitle">
+        Total Food Waste by Category
+      </p>
+    </div>
 
-  <br />
+
+    <div id="smallVizContainer">
+      <div id="ms">
+
+        <p>
+          <p id="totalCostTitle">
+            Total Cost of Your Food Waste
+          </p>
+          <p>    This Cost Visualization is calculated based on the average cost 
+            of each of food item categories. The price of food in the other category is not considered.</p>
+          <div id="totalCost"></div>
+          <p id="totalCostTitle">
+            Top 3 Food Waste Costs
+          </p>
+          <div id="top1"></div>
+          <div id="top2"></div>
+          <div id="top3"></div>
+        </p>
+      </div>
+      <div id="gom">
+        <br/>
+
+        <p id="totalCostTitle">
+          Green-O-Meter
+        </p>
+        <p>
+          How Green is your food waste? This metric is calculated based on 
+        </p>
+        <p id="gom_text"></p>
+      </div>
+    </div>
+    
+    <div id="dp"></div>
+  </div>
+  
+  <script>
+
+  </script>
+  
   <br />
   <div align="center">
-    <button type="submit" class="btn btn-primary">Add Food</button>
+    <table>
+      <tr>
+        <th>
+          <form method="POST">
+            <input
+              type="hidden"
+              name="food_waste_CLICK"
+              id="food_waste_CLICK"
+              value="food_waste_CLICK"
+            />
+            <input type="hidden" name="foodwCLICK" id="foodwCLICK" value="1" />
+            <button type="submit" class="btn btn-secondary" id ="tfw" onclick="showViz(1)">
+              Total Food Wasted
+            </button>
+          </form>
+        </th>
+        <th>
+          <form method="POST">
+            <input
+              type="hidden"
+              name="money_spent_CLICK"
+              id="money_spent_CLICK"
+              value="money_spent_CLICK"
+            />
+            <input type="hidden" name="monwCLICK" id="monwCLICK" value="1" />
+            <button type="submit" class="btn btn-secondary">
+              Total Money Spent
+            </button>
+          </form>
+        </th>
+        <th>
+          <form method="POST">
+            <input
+              type="hidden"
+              name="daily_progress_CLICK"
+              id="daily_progress_CLICK"
+              value="daily_progress_CLICK"
+            />
+            <input type="hidden" name="progCLICK" id="progCLICK" value="1" />
+            <button type="submit" id ="dp-btn" class="btn btn-secondary">
+              Daily Progress
+            </button>
+          </form>
+        </th>
+        <th>
+          <form method="POST">
+            <input
+              type="hidden"
+              name="green_o_meter_CLICK"
+              id="green_o_meter_CLICK"
+              value="green_o_meter_CLICK"
+            />
+            <input type="hidden" name="gomCLICK" id="gomCLICK" value="1" />
+            <button type="submit" class="btn btn-secondary">Green-O-Meter</button>
+          </form>
+        </th>
+      </tr>
+    </table>
   </div>
-</form>
-{% endblock %}
+  <br />
+  
+  <ul class="list-group list-group-flush" id="notes">
+    {% for day in user.foodWaste %}
+    <li class="list-group-item">
+      {{ day.date.strftime("%m/%d/%Y, %H:%M:%S") }}
+      &nbsp 
+      Fruit: {{day.fruit}}
+      &nbsp 
+      Vegetable: {{day.vegetables}}
+      &nbsp 
+      Dairy: {{day.dairy}}
+      &nbsp 
+      Meat: {{day.meat}}
+      &nbsp 
+      Poultry: {{day.poultry}}
+      &nbsp 
+      Seafood: {{day.seafood}}
+      &nbsp 
+      Takeout: {{day.takeout}}
+      &nbsp 
+      Other: {{day.other}}
+      <!-- add more info -->
+      <button type="button" class="close" onClick="deleteNote({{ day.id }})">
+        <span aria-hidden="true">&times;</span>
+      </button>
 
-<!--  -->
+    </li>
+    {% endfor %}
+  </ul>
+
+  
+  <br />
+  
+  <form method="POST">
+    <input
+      type="hidden"
+      name="food_waste_data"
+      id="food_waste_data"
+      value="food_waste_data"
+    />
+    <h2>Enter your Food Waste here</h2>
+    <br/>
+    <br/>
+
+
+    <div id="slidersContainer">
+      <div>
+        <label for="fruit">Fruits</label>
+        <input
+          type="range"
+          name="fruit"
+          min="0"
+          max="100"
+          value="0"
+          class="myslider"
+          id="fruit"
+          oninput="outputUpdate(value, 'fruit_val')"
+        />
+        <output for="fruit" id="fruit_val">0</output>
+      </div>
+    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+      <div>
+        <label for="veggies">Vegetables</label>
+        <input
+          type="range"
+          name="veggies"
+          min="0"
+          max="100"
+          value="0"
+          class="myslider"
+          id="veggies"
+          oninput="outputUpdate(value, 'veggie_val')"
+        />
+        <output for="veggies" id="veggie_val">0</output>
+      </div>
+    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+    <br />
+    <div>
+      <label for="dairy">Dairy</label>
+      <input
+        type="range"
+        name="dairy"
+        min="0"
+        max="100"
+        value="0"
+        class="myslider"
+        id="dairy"
+        oninput="outputUpdate(value, 'dairy_val')"
+      />
+      <output for="dairy" id="dairy_val">0</output>
+    </div>
+
+    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+    &nbsp &nbsp &nbsp &nbsp &nbsp
+
+    <div>
+      <label for="meat">Meat</label>
+      <input
+        type="range"
+        name="meat"
+        min="0"
+        max="100"
+        value="0"
+        class="myslider"
+        id="meat"
+        oninput="outputUpdate(value, 'meat_val')"
+      />
+      <output for="meat" id="meat_val">0</output>
+    </div>
+
+    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+
+    <div>
+      <label for="poultry">Poultry</label>
+      <input
+        type="range"
+        name="poultry"
+        min="0"
+        max="100"
+        value="0"
+        class="myslider"
+        id="poultry"
+        oninput="outputUpdate(value, 'poultry_val')"
+      />
+      <output for="poultry" id="poultry_val">0</output>
+    </div>
+
+    <br />
+
+    <div>
+      <label for="fish_seafood">Seafood</label>
+      <input
+        type="range"
+        name="fish_seafood"
+        min="0"
+        max="100"
+        value="0"
+        class="myslider"
+        id="fish_seafood"
+        oninput="outputUpdate(value, 'fish_seafood_val')"
+      />
+      <output for="fish_seafood" id="fish_seafood_val">0</output>
+    </div>
+
+    &nbsp &nbsp &nbsp &nbsp &nbsp
+
+    <div>
+      <label for="takeout">Takeout</label>
+      <input
+        type="range"
+        name="takeout"
+        min="0"
+        max="100"
+        value="0"
+        class="myslider"
+        id="takeout"
+        oninput="outputUpdate(value, 'takeout_val')"
+      />
+      <output for="takeout" id="takeout_val">0</output>
+    </div>
+
+    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+
+    <div>
+      <label for="other">Other</label>
+      <input
+        type="range"
+        name="other"
+        min="0"
+        max="100"
+        value="0"
+        class="myslider"
+        id="other"
+        oninput="outputUpdate(value, 'other_val')"
+      />
+      <output for="other" id="other_val">0</output>
+     </div>
+
+  </div>
+
+    <script>
+
+    // .addEventListener("click",showViz(1))
+
+    function showViz(int){
+      if(int==1){
+        document.getElementById('fw').style.display=='none';
+      }
+    }
+
+
+
+    // set the dimensions and margins of the graph
+    var margin = { top: 20, right: 30, bottom: 40, left: 90 },
+        width = 1060 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+    
+    // establish gridline basics
+    let xScale = d3.scaleLinear()
+            .domain([0, 3000]).range([0,width]);
+    
+    
+    function vizThree() {
+      console.log('three');
+      var svg3 = d3
+      .select("#fw")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    }
+    
+    // append the svg object to the body of the page
+      var svg = d3
+      .select("#fw")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+    
+
+    //import data
+    function get_data() {
+      fetch("/user-data")
+       .then((data) => data.json())
+       .then((user) => { 
+         var data=user;
+
+        // Add X axis
+        var x = d3.scaleLinear().domain([0, 3000]).range([0, width]);
+
+        svg
+          .append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x))
+          .selectAll("text")
+          .attr("transform", "translate(-10,0)rotate(-45)")
+          .style("text-anchor", "end");
+        
+        // create gridlines
+        let bottomGridlines = d3.axisBottom(xScale)
+                                .tickFormat('').tickSize(height);
+
+        svg.append('g')
+              .attr('class', 'lines')
+              .attr('transform', `translate(${0}, ${0})`)
+              .call(bottomGridlines);
+  
+        // parseData
+        var totalFruit=0; 
+        var totalVegetable=0;
+        // var totalMilk=0;
+        var totalDairy=0;
+        var totalMeat=0;
+        var totalPoultry=0;
+        var totalSeafood=0;
+        var totalTakeout=0;
+        var totalOther=0;
+
+
+        var myObject = [{
+              "name":"Fruit",
+              "value":totalFruit,
+            },
+            {
+              "name":"Vegetable",
+              "value":totalVegetable,
+            },
+            // {
+            //   "name":"Milk",
+            //   "value":totalMilk,
+            // },
+            {
+              "name":"Dairy",
+              "value":totalDairy,
+            },
+            {
+              "name":"Meat",
+              "value":totalMeat,
+            },
+            {
+              "name":"Poultry",
+              "value":totalPoultry,
+            },
+            {
+              "name":"Seafood",
+              "value":totalSeafood,
+            },
+            {
+              "name":"Takeout",
+              "value":totalTakeout,
+            },
+            {
+              "name":"Other",
+              "value":totalOther,
+            }]
+
+
+         // create scale
+         var y = d3.scaleBand()
+                      .range([ 0, height ])
+                      .domain(myObject.map(function(d) { return d.name; }))
+                      .padding(.1);
+
+        svg.append("g")
+           .call(d3.axisLeft(y))
+           .selectAll("text")
+           .attr("class","yAxisText")
+
+
+        var yAxis = [
+          "Fruits",
+          "Vegetables",
+          // "Milk",
+          "Dairy",
+          "Meat",
+          "Poultry",
+          "Seafood",
+          "Takeout",
+          "Other",
+        ];
+
+
+        data.forEach(function(d) {
+
+            // getting total values of data
+            totalFruit += d.fruit || 0;
+            totalVegetable += d.veggies|| 0;
+            totalDairy += d.dairy|| 0;
+            totalMeat += d.meat|| 0;
+            totalPoultry += d.poultry|| 0;
+            totalSeafood += d.fish_seafood|| 0;
+            totalTakeout += d.takeout|| 0;
+            totalOther += d.other|| 0;
+
+
+
+        var myObject = [{
+              "name":"Fruit",
+              "value":totalFruit,
+            },
+            {
+              "name":"Vegetable",
+              "value":totalVegetable,
+            },
+            {
+              "name":"Dairy",
+              "value":totalDairy,
+            },
+            {
+              "name":"Meat",
+              "value":totalMeat,
+            },
+            {
+              "name":"Poultry",
+              "value":totalPoultry,
+            },
+            {
+              "name":"Seafood",
+              "value":totalSeafood,
+            },
+            {
+              "name":"Takeout",
+              "value":totalTakeout,
+            },
+            {
+              "name":"Other",
+              "value":totalOther,
+            }]
+
+          
+            // x scales
+            var x = d3.scaleLinear()
+                      .domain([0, 3000])
+                      .range([ 0, width]);
+
+            //append rects
+            svg.selectAll("myRect")
+                .data(myObject)
+                .enter()
+                .append("rect")
+                .attr("x", x(0) )
+                .attr("y", function(d) { return y(d.name)+11 ; })
+                .attr("width", function(d) { console.log(d.value); return x(d.value); })
+                .attr("height", 30 )
+                .attr("fill", "pink")
+
+        });
+
+
+
+        // Total Cost Visualization
+
+        // cost Variables
+        var totalFruitCost=0; 
+        var totalVegetableCost=0;
+        var totalDairyCost=0;
+        var totalMeatCost=0;
+        var totalPoultryCost=0;
+        var totalSeafoodCost=0;
+        var totalTakeoutCost=0;
+        var totalOtherCost=0;
+        var totalCost=0;
+        
+
+        // calculate total cost
+        data.forEach(function(d) {
+
+          // getting total values of data
+          totalFruitCost += d.fruit * 0.00156528333 || 0;
+          totalVegetableCost += d.veggies * 0.00141095962|| 0;
+          totalDairyCost += d.dairy *  0.00524759596 || 0;
+          totalMeatCost += d.meat * 0.01212543431|| 0;
+          totalPoultryCost += d.poultry * 0.00551146384 || 0;
+          totalSeafoodCost += d.fish_seafood * 0.02204585537|| 0;
+          totalTakeoutCost += d.takeout * 0.026 || 0;
+
+
+          var myObjectCost = [{
+              "name":"Fruit",
+              "value":totalFruitCost,
+            },
+            {
+              "name":"Vegetable",
+              "value":totalVegetableCost,
+            },
+            {
+              "name":"Dairy",
+              "value":totalDairyCost,
+            },
+            {
+              "name":"Meat",
+              "value":totalMeatCost,
+            },
+            {
+              "name":"Poultry",
+              "value":totalPoultryCost,
+            },
+            {
+              "name":"Seafood",
+              "value":totalSeafoodCost,
+            },
+            {
+              "name":"Takeout",
+              "value":totalTakeoutCost,
+            }]
+
+
+          totalCost=myObjectCost.reduce((total, obj) => obj.value + total,0)
+
+        
+        // display total cost
+        var svg2total = d3.select("#totalCost")
+                          .append("text")
+                          .text(totalCost.toFixed(2));
+
+        d3.select("#totalCost").text('$ '+totalCost.toFixed(2));
+
+
+        var result = Object.values(myObjectCost)
+                          .sort((a, b) => a.value - b.value);
+        
+        let topPrice = result[6]
+        let top2Price = result[5]
+        let top3Price = result[4]
+
+
+        // display top 3 values
+        // top 1
+        var svg2total3 = d3.select("#top1")
+                            .append("text")
+                            .text(topPrice.name , ':' , topPrice.value.toFixed(2));
+
+        d3.select("#top1").text(topPrice.name + ' :  '+'$ '+topPrice.value.toFixed(2));
+        
+        // top 2
+        var svg2total3 = d3.select("#top2")
+                            .append("text")
+                            .text(top2Price.name , ':' , top2Price.value.toFixed(2));
+
+        d3.select("#top2").text(top2Price.name + ' :  '+'$ '+top2Price.value.toFixed(2));
+
+        // top 3
+        var svg2total3 = d3.select("#top3")
+                            .append("text")
+                            .text(top3Price.name , ':' , top3Price.value.toFixed(2));
+
+        d3.select("#top3").text(top3Price.name + ' :  '+'$ '+top3Price.value.toFixed(2));
+
+        });
+
+        // calculate total waste
+        var totalFruit=0; 
+        var totalVegetable=0;
+        var totalDairy=0;
+        var totalMeat=0;
+        var totalPoultry=0;
+        var totalSeafood=0;
+        var totalTakeout=0;
+        var totalOther=0;
+        var totalWaste=0;
+
+        // calculate total Waste
+        data.forEach(function(d) {
+
+          // getting total values of data
+          totalFruit += d.fruit || 0;
+          totalVegetable += d.veggies|| 0;
+          totalDairy += d.dairy|| 0;
+          totalMeat += d.meat|| 0;
+          totalPoultry += d.poultry|| 0;
+          totalSeafood += d.fish_seafood|| 0;
+          totalTakeout += d.takeout|| 0;
+          totalOther += d.other|| 0;
+        })
+
+
+        var myObjectGreen = [{
+              "name":"Fruit",
+              "value":totalFruit,
+            },
+            {
+              "name":"Vegetable",
+              "value":totalVegetable,
+            },
+            {
+              "name":"Dairy",
+              "value":totalDairy,
+            },
+            {
+              "name":"Meat",
+              "value":totalMeat,
+            },
+            {
+              "name":"Poultry",
+              "value":totalPoultry,
+            },
+            {
+              "name":"Seafood",
+              "value":totalSeafood,
+            },
+            {
+              "name":"Takeout",
+              "value":totalTakeout,
+            }]
+
+            totalWaste=myObjectGreen.reduce((total, obj) => obj.value + total,0)
+    
+            console.log('green total Waste', totalWaste)
+
+      
+
+              if(totalWaste<100){
+              // greenest
+              console.log('greenest');
+              // show level1 image
+              var img = document.createElement("img");
+              // https://drive.google.com/file/d/1EHM3hEW9uRpHDDJ49naF5VbfDXRf6H2h/view?usp=sharing
+              img.src = 'https://drive.google.com/uc?export=view&id=1EHM3hEW9uRpHDDJ49naF5VbfDXRf6H2h';
+              console.log(img)
+              document.getElementById('gom').appendChild(img);
+              d3.select("#gom_text").append('text').text('Level One Good Job!');
+              
+            }else if(totalWaste<400){
+              // 2nd level green
+              console.log('greenest2');
+              var img = document.createElement("img");
+              // https://drive.google.com/file/d/1HyBqFr9d5yHa4pRXMdVjiZyDGJt7i-W-/view?usp=sharing
+              img.src = 'https://drive.google.com/uc?export=view&id=1HyBqFr9d5yHa4pRXMdVjiZyDGJt7i-W-';
+              console.log(img)
+              document.getElementById('gom').appendChild(img);
+              d3.select("#gom_text").append('text').text('Level Two Do Better!');
+
+            }else if(totalWaste<800){
+              // 3rd level green
+              console.log('greenest3');
+              var img = document.createElement("img");
+              // https://drive.google.com/file/d/1SoPd_xkb94UGVnOaGShdbQf16yYGHzjI/view?usp=sharing
+              img.src = 'https://drive.google.com/uc?export=view&id=1SoPd_xkb94UGVnOaGShdbQf16yYGHzjI';
+              console.log(img)
+              document.getElementById('gom').appendChild(img);
+              d3.select("#gom_text").append('text').text('Level Three Do Better!');
+            }else{
+              // 4th level green
+              console.log('greenest4');
+              var img = document.createElement("img");
+              img.src = 'https://drive.google.com/uc?export=view&id=1doEYEQLZf1i93ueTRqxMFkWSEUJPN-2n';
+              console.log(img)
+              document.getElementById('gom').appendChild(img);
+              d3.select("#gom_text").append('text').text('Level Four Do Better!');
+            }
+
+            
+      });
+    }
+
+    get_data();
+
+
+
+
+      function outputUpdate(vol, id) {
+      document.querySelector("#" + id).value = vol;
+      }
+
+      d3.select("#tfw")
+      .on("click", function () {
+        console.log('selected')
+        d3.select("#fw").style("display", none);
+      })
+
+      function deleteNote(noteId) {
+          fetch("/delete-note", {
+            method: "POST",
+            body: JSON.stringify({ noteId: noteId }),
+          }).then((_res) => {
+            window.location.href = "/";
+          });
+        }
+    </script>
+  
+    <br />
+    <br />
+    <br/>
+    <div align="center">
+      <button type="submit" class="btn btn-primary">Enter Food Waste</button>
+    </div>
+    <br />
+    <br />
+    <br/>
+
+  </form>
+  {% endblock %}
+  
+  <!--  -->
+  
