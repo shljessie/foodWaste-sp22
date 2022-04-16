@@ -19,6 +19,7 @@
     }
     .fw {
       display: none;
+      /* visibility: hidden; */
     }
     .ms {
       display: hidden;
@@ -47,7 +48,7 @@
   <br />
   
   <div id="my_dataviz">
-    <div id="fw" ></div>
+    <div id="fw" style="" ></div>
     <div id="ms">
       <br/>
       <br/>
@@ -57,9 +58,11 @@
         <br/>
         <br/>
         <p id="totalCostTitle">
-          TotalCost
+          Total Cost of Your Food Waste
         </p>
         <div id="totalCost"></div>
+        <div id="top1"></div>
+        <div id="top2"></div>
         <div id="top3"></div>
       </p>
     </div>
@@ -68,28 +71,8 @@
   </div>
   
   <script>
-    // show hide visualization
-    d3.select("#tfw")
-      .on("click", function () {
-        console.log('selected')
-        d3.select("#fw").style("display", none);
-      })
 
-    function showViz(int){
-      if(int==1){
-        console.log('inhere')
-        document.getElementsByClassName('fw').style.display="none";
-      }if(int ==2){
-
-      }if(int==3){
-
-      }if(int==3){
-
-      }else{
-
-      }
-      
-    }
+    var show = 2;
 
     // set the dimensions and margins of the graph
     var margin = { top: 20, right: 30, bottom: 40, left: 90 },
@@ -100,14 +83,30 @@
     let xScale = d3.scaleLinear()
             .domain([0, 3000]).range([0,width]);
     
-    // append the svg object to the body of the page
-    var svg = d3
+    
+    function vizThree() {
+      console.log('three');
+      var svg3 = d3
       .select("#fw")
       .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    }
+    
+    // append the svg object to the body of the page
+    
+      console.log('here')
+      var svg = d3
+      .select("#fw")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+    
 
     //import data
     function get_data() {
@@ -365,12 +364,14 @@
 
 
           console.log('printing data total cost', totalCost)
-
+        
+        // display total cost
         var svg2total = d3.select("#totalCost")
                           .append("text")
-                          .text(totalCost);
+                          .text(totalCost.toFixed(2));
 
-        d3.select("#totalCost").text(totalCost);
+        d3.select("#totalCost").text('$ '+totalCost.toFixed(2));
+
         console.log('myObject', myObjectCost)
 
         var result = Object.values(myObjectCost)
@@ -386,16 +387,39 @@
         console.log('top3Price', top3Price);
 
         // display top 3 values
+        // top 1
+        var svg2total3 = d3.select("#top1")
+                            .append("text")
+                            .text(topPrice.name , ':' , topPrice.value.toFixed(2));
+
+        d3.select("#top1").text(topPrice.name + ' :  '+'$ '+topPrice.value.toFixed(2));
+        
+        // top 2
+        var svg2total3 = d3.select("#top2")
+                            .append("text")
+                            .text(top2Price.name , ':' , top2Price.value.toFixed(2));
+
+        d3.select("#top2").text(top2Price.name + ' :  '+'$ '+top2Price.value.toFixed(2));
+
+        // top 3
         var svg2total3 = d3.select("#top3")
                             .append("text")
-                            .text(topPrice.name , ':' , topPrice.value);
+                            .text(top3Price.name , ':' , top3Price.value.toFixed(2));
 
-        d3.select("#totalCost").text(topPrice.name , ':' , topPrice.value);
+        d3.select("#top3").text(top3Price.name + ' :  '+'$ '+top3Price.value.toFixed(2));
+
+
         
 
 
         });
-
+        
+            // show hide visualization
+    d3.select("#dp-btn")
+      .on("click", function () {
+        console.log('selected')
+        vizThree()
+      })
 
         // display total Money
 
@@ -422,7 +446,7 @@
               value="food_waste_CLICK"
             />
             <input type="hidden" name="foodwCLICK" id="foodwCLICK" value="1" />
-            <button type="submit" class="btn btn-secondary" id ="tfw" onclick="">
+            <button type="submit" class="btn btn-secondary" id ="tfw" onclick="showViz(1)">
               Total Food Wasted
             </button>
           </form>
@@ -450,7 +474,7 @@
               value="daily_progress_CLICK"
             />
             <input type="hidden" name="progCLICK" id="progCLICK" value="1" />
-            <button type="submit" class="btn btn-secondary">
+            <button type="submit" id ="dp-btn" class="btn btn-secondary">
               Daily Progress
             </button>
           </form>
