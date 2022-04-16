@@ -20,16 +20,18 @@
       font-size: 18px;
     }
     #fw {
-      /* display: none; */
+      display: none;
       /* visibility: hidden; */
     }
     #ms {
+      display: none;
       width:40%;
       margin:5%;
     }
     #dp {
     }
     #gom {
+      display: none;
       width:40%;
       margin:5%;
     }
@@ -62,15 +64,107 @@
       margin-right: auto;
       width: 50%;
     }
-    #slidersContainer{
-      
+    .buttonToggle{
+      background-color: darkseagreen;
+      color:black; /* Green */
+      border: none;
+      /* color: white; */
+      padding: 15px 32px;
+    }
+    label{
+      font-size: 20px;
+    }
+    .myslider::-webkit-slider-thumb{
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      background: #04AA6D;
+      cursor: pointer;
+    }
+    .myslider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      background: #04AA6D;
+      cursor: pointer;
     }
   </style>
   
   <h1 align="center"> Your Food Waste Data Record</h1>
   <br />
   <br />
-  
+    
+  <br />
+  <div align="center">
+    <table>
+      <tr>
+        <th>
+          <form method="POST">
+            <input
+              type="hidden"
+              name="food_waste_CLICK"
+              id="food_waste_CLICK"
+              value="food_waste_CLICK"
+            />
+            <input type="hidden" name="foodwCLICK" id="foodwCLICK" value="1" />
+            <button type="submit" class="btn btn-secondary" style="visibility: hidden;" onclick="">
+              <button type="button" class="buttonToggle" id="btn_one" onclick="showViz(1)">
+                Total Food Waste
+              </button>
+            </button>
+          </form>
+        </th>
+        <th>
+          <form method="POST">
+            <input
+              type="hidden"
+              name="money_spent_CLICK"
+              id="money_spent_CLICK"
+              value="money_spent_CLICK"
+            />
+            <input type="hidden" name="monwCLICK" id="monwCLICK" value="1" />
+            <button type="submit" style="visibility: hidden;" class="btn btn-secondary">
+              <button type="button" class="buttonToggle" id="btn_two" onclick="showViz(2)">
+                Total Money Spent
+              </button>
+            </button>
+          </form>
+        </th>
+        <!-- <th>
+          <form method="POST">
+            <input
+              type="hidden"
+              name="daily_progress_CLICK"
+              id="daily_progress_CLICK"
+              value="daily_progress_CLICK"
+            />
+            <input type="hidden" name="progCLICK" id="progCLICK" value="1" />
+            <button type="submit" id ="dp-btn" style="visibility: hidden;" class="btn btn-secondary">
+              Daily Progress
+            </button>
+          </form>
+        <!-- </th> -->
+        <th>
+          <form method="POST">
+            <input
+              type="hidden"
+              name="green_o_meter_CLICK"
+              id="green_o_meter_CLICK"
+              value="green_o_meter_CLICK"
+            />
+            <input type="hidden" name="gomCLICK" id="gomCLICK" value="1" />
+            <button type="submit" style="visibility: hidden;" class="btn btn-secondary">
+              <button type="button" class="buttonToggle" id="btn_three" onclick="showViz(3)">
+                Green-O-Meter
+              </button>
+            </button>
+          </form>
+        </th>
+      </tr>
+    </table>
+  </div>
+  <br />
+
   <div id="my_dataviz">
     <div id="fw" style="" class="fw" >
       <p id="totalCostTitle">
@@ -112,76 +206,6 @@
     
     <div id="dp"></div>
   </div>
-  
-  <script>
-
-  </script>
-  
-  <br />
-  <div align="center">
-    <table>
-      <tr>
-        <th>
-          <form method="POST">
-            <input
-              type="hidden"
-              name="food_waste_CLICK"
-              id="food_waste_CLICK"
-              value="food_waste_CLICK"
-            />
-            <input type="hidden" name="foodwCLICK" id="foodwCLICK" value="1" />
-            <button type="submit" class="btn btn-secondary" style="visibility: hidden;" onclick="">
-              <button type="button" onclick="showViz(1)">
-                Total Food Waste
-              </button>
-            </button>
-           
-          </form>
-        </th>
-        <th>
-          <form method="POST">
-            <input
-              type="hidden"
-              name="money_spent_CLICK"
-              id="money_spent_CLICK"
-              value="money_spent_CLICK"
-            />
-            <input type="hidden" name="monwCLICK" id="monwCLICK" value="1" />
-            <button type="submit" class="btn btn-secondary">
-              Total Money Spent
-            </button>
-          </form>
-        </th>
-        <th>
-          <form method="POST">
-            <input
-              type="hidden"
-              name="daily_progress_CLICK"
-              id="daily_progress_CLICK"
-              value="daily_progress_CLICK"
-            />
-            <input type="hidden" name="progCLICK" id="progCLICK" value="1" />
-            <button type="submit" id ="dp-btn" class="btn btn-secondary">
-              Daily Progress
-            </button>
-          </form>
-        </th>
-        <th>
-          <form method="POST">
-            <input
-              type="hidden"
-              name="green_o_meter_CLICK"
-              id="green_o_meter_CLICK"
-              value="green_o_meter_CLICK"
-            />
-            <input type="hidden" name="gomCLICK" id="gomCLICK" value="1" />
-            <button type="submit" class="btn btn-secondary">Green-O-Meter</button>
-          </form>
-        </th>
-      </tr>
-    </table>
-  </div>
-  <br />
   
   <ul class="list-group list-group-flush" id="notes">
     {% for day in user.foodWaste %}
@@ -368,10 +392,55 @@
 
     function showViz(int){
       console.log('clicked')
-    
-      var div= document.getElementById('fw').style.display='none';
-      // console.log('div', document.getElementById('fw').style.display)
-      // .style.display=='none';
+
+      if(int==1){
+        var vis1 = document.getElementById("fw");
+        var vis1_btn = document.getElementById("btn_one");
+        
+        if (vis1.style.display === "none") {
+          vis1.style.display = "block";
+          vis1_btn.style.backgroundColor ="darkgreen";
+          vis1_btn.style.color ="white";
+          
+        } else {
+          vis1.style.display = "none";
+          vis1_btn.style.backgroundColor ="darkseagreen";
+          vis1_btn.style.color ="black";
+        }
+
+      }if(int==2){
+         
+        var vis2 = document.getElementById("ms");
+        var vis2_btn = document.getElementById("btn_two");
+
+        if (vis2.style.display === "none") {
+          vis2.style.display = "block";
+          vis2_btn.style.backgroundColor ="darkgreen";
+          vis2_btn.style.color ="white";
+        } else {
+          vis2.style.display = "none";
+          vis2_btn.style.backgroundColor ="darkseagreen";
+          vis2_btn.style.color ="black";
+        }
+
+
+      }if(int==3){
+
+        var vis3 = document.getElementById("gom");
+        var vis3_btn = document.getElementById("btn_three");
+
+        if (vis3.style.display === "none") {
+          vis3.style.display = "block";
+          vis3_btn.style.backgroundColor ="darkgreen";
+          vis3_btn.style.color ="white";
+          
+        } else {
+          vis3.style.display = "none";
+          vis3_btn.style.backgroundColor ="darkseagreen";
+          vis3_btn.style.color ="black";
+        }
+
+      }
       
     }
 
@@ -803,7 +872,7 @@
     <br />
     <br/>
     <div align="center">
-      <button type="submit" class="btn btn-primary">Enter Food Waste</button>
+      <button type="submit" class="btn btn-success">Enter Food Waste</button>
     </div>
     <br />
     <br />
