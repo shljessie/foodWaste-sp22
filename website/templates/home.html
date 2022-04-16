@@ -72,7 +72,7 @@
   <br />
   
   <div id="my_dataviz">
-    <div id="fw" style="" >
+    <div id="fw" style="" class="fw" >
       <p id="totalCostTitle">
         Total Food Waste by Category
       </p>
@@ -130,9 +130,12 @@
               value="food_waste_CLICK"
             />
             <input type="hidden" name="foodwCLICK" id="foodwCLICK" value="1" />
-            <button type="submit" class="btn btn-secondary" id ="tfw" onclick="showViz(1)">
-              Total Food Wasted
+            <button type="submit" class="btn btn-secondary" style="visibility: hidden;" onclick="">
+              <button type="button" onclick="showViz(1)">
+                Total Food Waste
+              </button>
             </button>
+           
           </form>
         </th>
         <th>
@@ -357,18 +360,20 @@
       <output for="other" id="other_val">0</output>
      </div>
 
+     <!-- <button id="test"type="button" onclick="showDiv()">clickme</button> -->
+
   </div>
 
     <script>
 
-    // .addEventListener("click",showViz(1))
-
     function showViz(int){
-      if(int==1){
-        document.getElementById('fw').style.display=='none';
-      }
+      console.log('clicked')
+    
+      var div= document.getElementById('fw').style.display='none';
+      // console.log('div', document.getElementById('fw').style.display)
+      // .style.display=='none';
+      
     }
-
 
 
     // set the dimensions and margins of the graph
@@ -780,18 +785,9 @@
 
     get_data();
 
-
-
-
       function outputUpdate(vol, id) {
       document.querySelector("#" + id).value = vol;
       }
-
-      d3.select("#tfw")
-      .on("click", function () {
-        console.log('selected')
-        d3.select("#fw").style("display", none);
-      })
 
       function deleteNote(noteId) {
           fetch("/delete-note", {
