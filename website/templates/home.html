@@ -4,8 +4,10 @@
 
   
   <head>
+    <meta charset="UTF-8">
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.0.0/d3.min.js"></script>
+    
   </head>
 
   <style>
@@ -67,7 +69,9 @@
       </p>
     </div>
     <div id="dp"></div>
-    <div id="gom"></div>
+    <div id="gom">
+      <img src="/images/level4.png" alt="Italian Trulli"></img>
+    </div>
   </div>
   
   <script>
@@ -488,20 +492,44 @@
     
             console.log('green total Waste', totalWaste)
 
-            if(totalWaste<100){
+      
+
+              if(totalWaste>2000){
               // greenest
               console.log('greenest');
-              // show different Image
-            }else if(totalWaste<300){
+              // show level1 image
+              var img = document.createElement("img");
+              // https://drive.google.com/file/d/1EHM3hEW9uRpHDDJ49naF5VbfDXRf6H2h/view?usp=sharing
+              img.src = 'https://drive.google.com/uc?export=view&id=1EHM3hEW9uRpHDDJ49naF5VbfDXRf6H2h';
+              console.log(img)
+              document.getElementById('gom').appendChild(img);
+              
+            }else if(totalWaste<2000){
               // 2nd level green
               console.log('greenest2');
-            }else if(totalWaste<700){
+              var img = document.createElement("img");
+              // https://drive.google.com/file/d/1HyBqFr9d5yHa4pRXMdVjiZyDGJt7i-W-/view?usp=sharing
+              img.src = 'https://drive.google.com/uc?export=view&id=1HyBqFr9d5yHa4pRXMdVjiZyDGJt7i-W-';
+              console.log(img)
+              document.getElementById('gom').appendChild(img);
+            }else if(totalWaste<2000){
               // 3rd level green
               console.log('greenest3');
-            }else {
+              var img = document.createElement("img");
+              // https://drive.google.com/file/d/1SoPd_xkb94UGVnOaGShdbQf16yYGHzjI/view?usp=sharing
+              img.src = 'https://drive.google.com/uc?export=view&id=1SoPd_xkb94UGVnOaGShdbQf16yYGHzjI';
+              console.log(img)
+              document.getElementById('gom').appendChild(img);
+            }else if(totalWaste<2000){
               // 4th level green
               console.log('greenest4');
+              var img = document.createElement("img");
+              img.src = 'https://drive.google.com/uc?export=view&id=1doEYEQLZf1i93ueTRqxMFkWSEUJPN-2n';
+              console.log(img)
+              document.getElementById('gom').appendChild(img);
             }
+
+            
       });
     }
 
@@ -746,6 +774,7 @@
     <div align="center">
       <button type="submit" class="btn btn-primary">Add Food</button>
     </div>
+
   </form>
   {% endblock %}
   
