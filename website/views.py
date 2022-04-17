@@ -75,6 +75,26 @@ def home():
 
     return render_template("home.html", user=current_user)
 
+@views.route('/food-waste-click')
+def fun_foodwCLICK():
+    new_note = UserClicks(foodwCLICK=1, user_id=current_user.id)
+    db.session.add(new_note)
+    db.session.commit()
+    return jsonify({})
+
+@views.route('/money-waste-click')
+def fun_monwCLICK():
+    new_note = UserClicks(monwCLICK=1, user_id=current_user.id)
+    db.session.add(new_note)
+    db.session.commit()
+    return jsonify({})
+
+@views.route('/daily-waste-click')
+def fun_progCLICK():
+    new_note = UserClicks(progCLICK=1, user_id=current_user.id)
+    db.session.add(new_note)
+    db.session.commit()
+    return jsonify({})
 
 @views.route('/user-data')
 @login_required

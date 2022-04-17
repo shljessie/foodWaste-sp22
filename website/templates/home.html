@@ -29,6 +29,7 @@
       margin:5%;
     }
     #dp {
+      display: none;
     }
     #gom {
       display: none;
@@ -91,12 +92,44 @@
     #btn_three:hover{
       transform: scale(1.1); 
     }
+    #btn_four:hover{
+      transform: scale(1.1); 
+    }
   </style>
   
   <h1 align="center"> Your Food Waste Data Record</h1>
   <br />
   <p style="text-align: center;">Click on the buttons below to see the visualizations of your food waste</p>
   <br />
+
+  <script>
+    function showFoodWasteClick() {
+      fetch('/food-waste-click', {
+              // method: 'POST',
+              // body: JSON.stringify({}),
+            }).then((_res) => { showViz(1)
+            });
+      console.log('test')
+    }
+
+    function showMoneyWasteClick() {
+      fetch('/money-waste-click', {
+              // method: 'POST',
+              // body: JSON.stringify({}),
+            }).then((_res) => { showViz(2)
+            });
+      console.log('test')
+    }
+
+    function showDailyWasteClick() {
+      fetch('/daily-waste-click', {
+              // method: 'POST',
+              // body: JSON.stringify({}),
+            }).then((_res) => { showViz(4)
+            });
+      console.log('test')
+    }
+  </script>
     
   <br />
   <div align="center">
@@ -111,11 +144,8 @@
               value="food_waste_CLICK"
             />
             <input type="hidden" name="foodwCLICK" id="foodwCLICK" value="1" />
-            <!-- <button type="submit" class="btn btn-secondary" style="visibility: hidden;" onclick=""> -->
-              <button type="submit" class="buttonToggle" id="btn_one" onclick="showViz(1)">
-                <button type="submit" class="btn btn-secondary" style="visibility: hidden;" onclick=""></button>
-                Total Food Waste
-              </button>
+            <button type='button' class='buttonToggle' id='btn_one'  onclick="showFoodWasteClick()">
+              Total Food Waste
             </button>
           </form>
         </th>
@@ -128,14 +158,17 @@
               value="money_spent_CLICK"
             />
             <input type="hidden" name="monwCLICK" id="monwCLICK" value="1" />
-            <button type="submit" style="visibility: hidden;" class="btn btn-secondary">
-              <button type="button" class="buttonToggle" id="btn_two" onclick="showViz(2)">
+            <!-- <button type="submit" style="visibility: hidden;" class="btn btn-secondary"> -->
+              <!-- <button type="button" class="buttonToggle" id="btn_two" onclick="showViz(2)">
+                Total Money Spent
+              </button> -->
+              <button type="button" class="buttonToggle" id="btn_two" onclick="showMoneyWasteClick()">
                 Total Money Spent
               </button>
-            </button>
+            <!-- </button> -->
           </form>
         </th>
-        <!-- <th>
+        <th>
           <form method="POST">
             <input
               type="hidden"
@@ -144,11 +177,13 @@
               value="daily_progress_CLICK"
             />
             <input type="hidden" name="progCLICK" id="progCLICK" value="1" />
-            <button type="submit" id ="dp-btn" style="visibility: hidden;" class="btn btn-secondary">
-              Daily Progress
-            </button>
+            <!-- <button type="submit" id ="dp-btn" style="visibility: hidden;" class="btn btn-secondary"> -->
+              <button type="button" class="buttonToggle" id="btn_four" onclick="showDailyWasteClick()">
+                Daily Progress
+              </button>
+            <!-- </button> -->
           </form>
-        <!-- </th> -->
+        </th> 
         <th>
           <form method="POST">
             <input
@@ -175,6 +210,9 @@
       <p id="totalCostTitle">
         Total Food Waste by Category (grams)
       </p>
+      <p>
+        This is your accumulated total food waste for each category.
+      </p>
     </div>
 
 
@@ -186,7 +224,7 @@
             Total Cost of Your Food Waste
           </p>
           <p>    This Cost Visualization is calculated based on the average cost 
-            of each of food item categories. The price of food in the 'other' category is not considered.</p>
+            of each of food category. The price of food in the 'other' category is not considered.</p>
           <div id="totalCost"></div>
           <p id="totalCostTitle">
             Top 3 Food Waste Costs
@@ -203,13 +241,22 @@
           Green-O-Meter
         </p>
         <p>
-          How Green is your food waste? This metric is calculated based on 
+          This metric is calculated based on the average amount of food waste produced in a day in the US.
+          You will have a healthy plant at level 1 and a dying plant at level 4.
+          
         </p>
         <p id="gom_text"></p>
       </div>
     </div>
     
-    <div id="dp"></div>
+    <div id="dp">
+      <p id="totalCostTitle">
+        Daily Food Waste Report (grams)
+      </p>
+      <p>
+        The green horizontal line refers to the daily individual national average of food waste produced. 
+      </p>
+    </div>
   </div>  
   
   <form method="POST">
@@ -406,6 +453,23 @@
         }
 
       }
+      if(int==4){
+
+        var vis4 = document.getElementById("dp");
+        var vis4_btn = document.getElementById("btn_four");
+
+        if (vis4.style.display === "none") {
+          vis4.style.display = "block";
+          vis4_btn.style.backgroundColor ="darkgreen";
+          vis4_btn.style.color ="white";
+          
+        } else {
+          vis4.style.display = "none";
+          vis4_btn.style.backgroundColor ="darkseagreen";
+          vis4_btn.style.color ="black";
+        }
+
+        }
       
     }
 
@@ -474,7 +538,6 @@
         // parseData
         var totalFruit=0; 
         var totalVegetable=0;
-        // var totalMilk=0;
         var totalDairy=0;
         var totalMeat=0;
         var totalPoultry=0;
@@ -611,15 +674,6 @@
 
         });
 
-        data.forEach(function(d) {
-          // console.log(d.date);
-          // var date= d.date;
-          // // var time;
-          // date =time.mktime(date.timetuple())
-          // date=new Date(date)
-          // console.log('covert',date);
-
-        });
 
 
 
@@ -736,13 +790,14 @@
         var totalTakeout=0;
         var totalOther=0;
         var totalWaste=0;
+        var date;
 
         // calculate total Waste
         data.forEach(function(d) {
 
-          var date= d.js_date;
+          date= d.js_date;
           date=new Date(date*1000).getDate()
-          console.log(date);
+         
 
           // getting total values of data
           totalFruit += d.fruit || 0;
@@ -754,6 +809,7 @@
           totalTakeout += d.takeout|| 0;
           totalOther += d.other|| 0;
         })
+        console.log(date);
 
 
         var myObjectGreen = [{
@@ -803,7 +859,7 @@
               img.src = 'https://drive.google.com/uc?export=view&id=1EHM3hEW9uRpHDDJ49naF5VbfDXRf6H2h';
               console.log(img)
               document.getElementById('gom').appendChild(img);
-              d3.select("#gom_text").append('text').text('Level One Good Job!');
+              d3.select("#gom_text").append('text').text('Level 1');
               
             }else if(totalWaste<500){
               // 2nd level green average
@@ -813,7 +869,7 @@
               img.src = 'https://drive.google.com/uc?export=view&id=1HyBqFr9d5yHa4pRXMdVjiZyDGJt7i-W-';
               console.log(img)
               document.getElementById('gom').appendChild(img);
-              d3.select("#gom_text").append('text').text('Level Two Do Better!');
+              d3.select("#gom_text").append('text').text('Level 2');
 
             }else if(totalWaste<900){
               // 3rd level green
@@ -823,7 +879,7 @@
               img.src = 'https://drive.google.com/uc?export=view&id=1SoPd_xkb94UGVnOaGShdbQf16yYGHzjI';
               console.log(img)
               document.getElementById('gom').appendChild(img);
-              d3.select("#gom_text").append('text').text('Level Three Do Better!');
+              d3.select("#gom_text").append('text').text('Level 3');
             }else{
               // 4th level green
               console.log('greenest4');
@@ -831,8 +887,189 @@
               img.src = 'https://drive.google.com/uc?export=view&id=1doEYEQLZf1i93ueTRqxMFkWSEUJPN-2n';
               console.log(img)
               document.getElementById('gom').appendChild(img);
-              d3.select("#gom_text").append('text').text('Level Four Do Better!');
+              d3.select("#gom_text").append('text').text('Level 4');
             }
+
+
+            // create progress bar visualization
+
+            // initialize svg
+            var svg4 = d3.select("#dp")
+                        .append("svg")
+                        .attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.top-10 + margin.bottom+50)
+                        .append("g")
+                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+            // days of study
+            xAxis=[
+              '04-17-2022',
+              '04-18-2022',
+              '04-19-2022',
+              '04-20-2022',
+              '04-21-2022',
+              '04-22-2022',
+              '04-23-2022',
+              '04-24-2022',
+            ]
+            // Add X axis scale
+            var x_four = d3.scaleBand().range([0, width]).domain(xAxis);
+
+            // add x axis to svg
+            svg4.append("g")
+                .attr("transform", "translate(0," + height + ")")
+                .call(d3.axisBottom(x_four))
+                .selectAll("text")
+                .attr("class","yAxisText")
+                .attr("transform", "translate(-10,0)rotate(-45)")
+                .style("text-anchor", "end");
+
+
+            // create y axis scale
+            var y_four = d3.scaleLinear()
+                          .domain([0, 1000])
+                          .range([ height,0]);
+
+            // create x axis grid 
+            const yAxisGrid = d3.axisLeft(y_four).tickSize(-width).tickFormat('').ticks(10);
+
+            svg4.append('g')
+                .attr('class', 'lines')
+                // .attr('class', 'y axis-grid')
+                .call(yAxisGrid);
+
+            // append y axis
+            svg4.append("g")
+                .call(d3.axisLeft(y_four))
+                .selectAll("text")
+                .attr("class","yAxisText")
+
+            // variables
+            var day17Total=0;
+            var day18Total=0;
+            var day19Total=0;
+            var day20Total=0;
+            var day21Total=0;
+            var day22Total=0;
+            var day23Total=0;
+            var day24Total=0;
+
+            // get data
+            data.forEach(function(d){
+
+              // get data date
+              var date= d.js_date;
+              date=new Date(date*1000).getDate()+1
+              console.log(date);
+
+              if(date==17){
+                day17Total += d.fruit || 0 +d.veggies|| 0 +d.veggies|| 0 +d.dairy|| 0 +d.meat|| 0 +d.poultry|| 0 +d.fish_seafood|| 0 + d.takeout|| 0 +d.other|| 0;
+              } 
+              if (date==18){
+                day18Total += d.fruit || 0 +d.veggies|| 0 +d.veggies|| 0 +d.dairy|| 0 +d.meat|| 0 +d.poultry|| 0 +d.fish_seafood|| 0 + d.takeout|| 0 +d.other|| 0;
+              }
+              if (date==19){
+                day19Total += d.fruit || 0 +d.veggies|| 0 +d.veggies|| 0 +d.dairy|| 0 +d.meat|| 0 +d.poultry|| 0 +d.fish_seafood|| 0 + d.takeout|| 0 +d.other|| 0;
+              }
+              if (date==20){
+                day20Total += d.fruit || 0 +d.veggies|| 0 +d.veggies|| 0 +d.dairy|| 0 +d.meat|| 0 +d.poultry|| 0 +d.fish_seafood|| 0 + d.takeout|| 0 +d.other|| 0;
+              }
+              if (date==21){
+                day21Total += d.fruit || 0 +d.veggies|| 0 +d.veggies|| 0 +d.dairy|| 0 +d.meat|| 0 +d.poultry|| 0 +d.fish_seafood|| 0 + d.takeout|| 0 +d.other|| 0;
+              }
+              if (date==22){
+                day22Total += d.fruit || 0 +d.veggies|| 0 +d.veggies|| 0 +d.dairy|| 0 +d.meat|| 0 +d.poultry|| 0 +d.fish_seafood|| 0 + d.takeout|| 0 +d.other|| 0;
+              }
+              if (date==23){
+                day23Total += d.fruit || 0 +d.veggies|| 0 +d.veggies|| 0 +d.dairy|| 0 +d.meat|| 0 +d.poultry|| 0 +d.fish_seafood|| 0 + d.takeout|| 0 +d.other|| 0;
+              }
+              if (date==24){
+                day24Total += d.fruit || 0 +d.veggies|| 0 +d.veggies|| 0 +d.dairy|| 0 +d.meat|| 0 +d.poultry|| 0 +d.fish_seafood|| 0 + d.takeout|| 0 +d.other|| 0;
+              }
+
+              console.log('day17Total',day17Total)
+
+            })
+           
+            // var dayTotals =[day17Total,day18Total,day19Total,day20Total,day21Total,day22Total,day23Total,day24Total]
+
+            var dayTotals = [{
+              "name":'04-17-2022',
+              "value":day17Total,
+            },
+            {
+              "name":'04-18-2022',
+              "value":day18Total,
+            },
+            {
+              "name":'04-19-2022',
+              "value":day19Total,
+            },
+            {
+              "name":'04-20-2022',
+              "value":day20Total,
+            },
+            {
+              "name":'04-21-2022',
+              "value":day21Total,
+            },
+            {
+              "name":'04-22-2022',
+              "value":day22Total,
+            },
+            {
+              "name":'04-23-2022',
+              "value":day23Total,
+            },
+            {
+              "name":'04-24-2022',
+              "value":day24Total,
+            }
+
+          ]
+
+            svg4.append('g')
+              .selectAll("dot")
+              .data(dayTotals)
+              .enter()
+              .append("circle")
+              .attr("cx", function (d) { return x_four(d.name); } )
+              .attr("cy", function (d) { return y_four(d.value); } )
+              .attr("r", 5)
+              .attr("transform", "translate(" + 59 + "," + 0 + ")")
+              .style("fill", "#CC0000");
+            
+              console.log('20',day20Total)
+
+
+        var line = d3.line()
+                      .x(function(d) { return x_four(d.name); }) 
+                      .y(function(d) { return y_four(d.value); }) 
+                      .curve(d3.curveMonotoneX)
+
+        // draw average line
+        svg4.append('line')
+            .style("stroke", "darkseagreen")
+            .style("stroke-width", 3)
+            .attr("x1", 0)
+            .attr("y1", 240)
+            .attr("x2",width)
+            .attr("y2", 240);
+
+        // svg4.append('text')
+        //     .text('Average Food Waste Produced')
+        //     .attr("x", 30)
+        //     .attr("y", 220); 
+                      
+        svg4.append("path")
+            .datum(dayTotals) 
+            .attr("class", "line") 
+            .attr("transform", "translate(" + 59 + "," + 0 + ")")
+            .attr("d", line)
+            .style("fill", "none")
+            .style("stroke", "#CC0000")
+            .style("stroke-width", "2");
 
             
       });
