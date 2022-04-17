@@ -73,8 +73,8 @@ def home():
 @views.route('/user-data')
 @login_required
 def user_data():
-  user_data = UserFoodWaste.query.all()
-  return jsonpickle.encode(user_data)
+    user_data = UserFoodWaste.query.filter_by(user_id=current_user.id).all()
+    return jsonpickle.encode(user_data)
 
 
 @views.route('/delete-note', methods=['POST'])
