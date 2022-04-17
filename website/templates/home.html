@@ -75,20 +75,6 @@
     label{
       font-size: 20px;
     }
-    .myslider::-webkit-slider-thumb{
-      -webkit-appearance: none;
-      appearance: none;
-      width: 25px;
-      height: 25px;
-      background: #04AA6D;
-      cursor: pointer;
-    }
-    .myslider::-moz-range-thumb {
-      width: 25px;
-      height: 25px;
-      background: #04AA6D;
-      cursor: pointer;
-    }
     #th_slider{
       margin:10px;
     }
@@ -96,8 +82,14 @@
       border-collapse:separate; 
       border-spacing:5em;
     }
+    #btn_one:hover{
+      transform: scale(1.1); 
+    }
     #btn_two:hover{
-      transform: scale(1.5); 
+      transform: scale(1.1); 
+    }
+    #btn_three:hover{
+      transform: scale(1.1); 
     }
   </style>
   
@@ -217,38 +209,7 @@
     </div>
     
     <div id="dp"></div>
-  </div>
-  
-  <ul class="list-group list-group-flush" id="notes">
-    {% for day in user.foodWaste %}
-    <li class="list-group-item">
-      {{ day.date.strftime("%m/%d/%Y, %H:%M:%S") }}
-      &nbsp 
-      Fruit: {{day.fruit}}
-      &nbsp 
-      Vegetable: {{day.vegetables}}
-      &nbsp 
-      Dairy: {{day.dairy}}
-      &nbsp 
-      Meat: {{day.meat}}
-      &nbsp 
-      Poultry: {{day.poultry}}
-      &nbsp 
-      Seafood: {{day.seafood}}
-      &nbsp 
-      Takeout: {{day.takeout}}
-      &nbsp 
-      Other: {{day.other}}
-      <!-- add more info -->
-      <button type="button" class="close" onClick="deleteNote({{ day.id }})">
-        <span aria-hidden="true">&times;</span>
-      </button>
-
-    </li>
-    {% endfor %}
-  </ul>
-
-  
+  </div>  
   
   <form method="POST">
     <input
@@ -888,8 +849,40 @@
     <div align="center">
       <button type="submit" class="btn btn-success">Enter Food Waste</button>
     </div>
+
+
+
     <br />
     <br />
+    <p></p>
+    <ul class="list-group list-group-flush" id="notes">
+      {% for day in user.foodWaste %}
+      <li class="list-group-item">
+        {{ day.date.strftime("%m/%d/%Y, %H:%M:%S") }}
+        &nbsp 
+        Fruit: {{day.fruit}}
+        &nbsp 
+        Vegetable: {{day.vegetables}}
+        &nbsp 
+        Dairy: {{day.dairy}}
+        &nbsp 
+        Meat: {{day.meat}}
+        &nbsp 
+        Poultry: {{day.poultry}}
+        &nbsp 
+        Seafood: {{day.seafood}}
+        &nbsp 
+        Takeout: {{day.takeout}}
+        &nbsp 
+        Other: {{day.other}}
+        <!-- add more info -->
+        <button type="button" class="close" onClick="deleteNote({{ day.id }})">
+          <span aria-hidden="true">&times;</span>
+        </button>
+  
+      </li>
+      {% endfor %}
+    </ul>
     <br/>
 
   </form>
