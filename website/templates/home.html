@@ -65,6 +65,7 @@
       width: 50%;
     }
     .buttonToggle{
+      border-radius: 16px;
       background-color: darkseagreen;
       color:black; /* Green */
       border: none;
@@ -95,11 +96,14 @@
       border-collapse:separate; 
       border-spacing:5em;
     }
+    #btn_two:hover{
+      transform: scale(1.5); 
+    }
   </style>
   
   <h1 align="center"> Your Food Waste Data Record</h1>
   <br />
-  <p>Click on the buttons below to see the visualizations of your food waste</p>
+  <p style="text-align: center;">Click on the buttons below to see the visualizations of your food waste</p>
   <br />
     
   <br />
@@ -176,7 +180,7 @@
   <div id="my_dataviz">
     <div id="fw" style="" class="fw" >
       <p id="totalCostTitle">
-        Total Food Waste by Category
+        Total Food Waste by Category (grams)
       </p>
     </div>
 
@@ -245,7 +249,6 @@
   </ul>
 
   
-  <br />
   
   <form method="POST">
     <input
@@ -256,7 +259,7 @@
     />
     <br/>
     <br/>
-    <h3 style="text-align: center">Enter your Food Waste here</h3>
+    <h3 style="text-align: center">Enter your Food Waste here (grams)</h3>
 
     <table id="sliderContainer">
       <tr>
@@ -274,7 +277,7 @@
         />
         <output for="fruit" id="fruit_val">0</output>
       </th>
-      <br/>
+      
       <th id="th_slider">
         <label for="veggies">Vegetables</label>
         <input
@@ -290,7 +293,6 @@
         <output for="veggies" id="veggie_val">0</output>
       </th>
     
-    <br />
     <th id="th_slider">
       <label for="dairy">Dairy</label>
       <input
@@ -305,8 +307,6 @@
       />
       <output for="dairy" id="dairy_val">0</output>
     </th>
-
-   <br/>
 
     <th id="th_slider">
       <label for="meat">Meat</label>
@@ -325,8 +325,6 @@
     </tr>
     <tr>
 
-    <br/>
-
     <th id="th_slider">
       <label for="poultry">Poultry</label>
       <input
@@ -341,8 +339,6 @@
       />
       <output for="poultry" id="poultry_val">0</output>
     </th>
-
-    <br />
 
     <th id="th_slider">
       <label for="fish_seafood">Seafood</label>
@@ -359,8 +355,6 @@
       <output for="fish_seafood" id="fish_seafood_val">0</output>
     </th>
 
-    <br/>
-
     <th id="th_slider">
       <label for="takeout">Takeout</label>
       <input
@@ -376,7 +370,6 @@
       <output for="takeout" id="takeout_val">0</output>
     </th>
 
-    <br/>
 
     <th id="th_slider">
       <label for="other">Other</label>
@@ -891,10 +884,7 @@
           });
         }
     </script>
-  
-    <br />
-    <br />
-    <br/>
+
     <div align="center">
       <button type="submit" class="btn btn-success">Enter Food Waste</button>
     </div>
