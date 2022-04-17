@@ -96,6 +96,13 @@ def fun_progCLICK():
     db.session.commit()
     return jsonify({})
 
+@views.route('/gom-click')
+def fun_gomCLICK():
+    new_note = UserClicks(gomCLICK=1, user_id=current_user.id)
+    db.session.add(new_note)
+    db.session.commit()
+    return jsonify({})
+
 @views.route('/user-data')
 @login_required
 def user_data():

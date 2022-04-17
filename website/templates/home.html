@@ -109,7 +109,7 @@
               // body: JSON.stringify({}),
             }).then((_res) => { showViz(1)
             });
-      console.log('test')
+      // console.log('test')
     }
 
     function showMoneyWasteClick() {
@@ -118,7 +118,7 @@
               // body: JSON.stringify({}),
             }).then((_res) => { showViz(2)
             });
-      console.log('test')
+      // console.log('test')
     }
 
     function showDailyWasteClick() {
@@ -127,7 +127,16 @@
               // body: JSON.stringify({}),
             }).then((_res) => { showViz(4)
             });
-      console.log('test')
+      // console.log('test')
+    }
+
+    function showGOMClick() {
+      fetch('/gom-click', {
+              // method: 'POST',
+              // body: JSON.stringify({}),
+            }).then((_res) => { showViz(3)
+            });
+      // console.log('test')
     }
   </script>
     
@@ -193,11 +202,11 @@
               value="green_o_meter_CLICK"
             />
             <input type="hidden" name="gomCLICK" id="gomCLICK" value="1" />
-            <button type="submit" style="visibility: hidden;" class="btn btn-secondary">
-              <button type="button" class="buttonToggle" id="btn_three" onclick="showViz(3)">
+            <!-- <button type="submit" style="visibility: hidden;" class="btn btn-secondary"> -->
+              <button type="button" class="buttonToggle" id="btn_three" onclick="showGOMClick()">
                 Green-O-Meter
               </button>
-            </button>
+            <!-- </button> -->
           </form>
         </th>
       </tr>
