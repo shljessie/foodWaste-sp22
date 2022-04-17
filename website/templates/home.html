@@ -744,10 +744,6 @@
           date=new Date(date*1000).getDate()
           console.log(date);
 
-          if(date==16){
-
-          }
-
           // getting total values of data
           totalFruit += d.fruit || 0;
           totalVegetable += d.veggies|| 0;
@@ -793,9 +789,12 @@
     
             console.log('green total Waste', totalWaste)
 
-      
+          // hardcoded the Date!!!! documentation
+            var divider= (date-16)+1
 
-              if(totalWaste<100){
+            totalWaste = totalWaste/ divider
+
+              if(totalWaste<200){
               // greenest
               console.log('greenest');
               // show level1 image
@@ -806,8 +805,8 @@
               document.getElementById('gom').appendChild(img);
               d3.select("#gom_text").append('text').text('Level One Good Job!');
               
-            }else if(totalWaste<400){
-              // 2nd level green
+            }else if(totalWaste<500){
+              // 2nd level green average
               console.log('greenest2');
               var img = document.createElement("img");
               // https://drive.google.com/file/d/1HyBqFr9d5yHa4pRXMdVjiZyDGJt7i-W-/view?usp=sharing
@@ -816,7 +815,7 @@
               document.getElementById('gom').appendChild(img);
               d3.select("#gom_text").append('text').text('Level Two Do Better!');
 
-            }else if(totalWaste<800){
+            }else if(totalWaste<900){
               // 3rd level green
               console.log('greenest3');
               var img = document.createElement("img");
