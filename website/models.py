@@ -36,6 +36,7 @@ class UserFoodWaste(db.Model):
     fish_seafood = db.Column(db.Integer) 
     takeout = db.Column(db.Integer) 
     other = db.Column(db.Integer) 
+    js_date = db.Column(db.Integer)
 
 class UserClicks(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

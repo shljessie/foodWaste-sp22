@@ -7,6 +7,8 @@ from . import db
 import json
 from dataclasses import dataclass
 import jsonpickle
+import time
+import datetime
 
 views = Blueprint('views', __name__)
 
@@ -25,11 +27,15 @@ def home():
             fish_seafood = request.form.get('fish_seafood')
             takeout = request.form.get('takeout')
             other = request.form.get('other')
+            # getting js date
+            todaysDate = datetime.date.today()
+            timeTuple = todaysDate.timetuple()
+            js_date = int(time.mktime(timeTuple)) * 1000
 
             new_note = UserFoodWaste(fruit=fruit, veggies=veggies, 
                                         dairy=dairy, meat=meat, poultry=poultry, 
                                         fish_seafood=fish_seafood, takeout=takeout, other=other,
-                                        user_id=current_user.id) 
+                                        user_id=current_user.id, js_date=js_date) 
 
             db.session.add(new_note)
             db.session.commit()

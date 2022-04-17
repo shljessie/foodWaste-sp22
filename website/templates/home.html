@@ -111,8 +111,9 @@
               value="food_waste_CLICK"
             />
             <input type="hidden" name="foodwCLICK" id="foodwCLICK" value="1" />
-            <button type="submit" class="btn btn-secondary" style="visibility: hidden;" onclick="">
-              <button type="button" class="buttonToggle" id="btn_one" onclick="showViz(1)">
+            <!-- <button type="submit" class="btn btn-secondary" style="visibility: hidden;" onclick=""> -->
+              <button type="submit" class="buttonToggle" id="btn_one" onclick="showViz(1)">
+                <button type="submit" class="btn btn-secondary" style="visibility: hidden;" onclick=""></button>
                 Total Food Waste
               </button>
             </button>
@@ -185,7 +186,7 @@
             Total Cost of Your Food Waste
           </p>
           <p>    This Cost Visualization is calculated based on the average cost 
-            of each of food item categories. The price of food in the other category is not considered.</p>
+            of each of food item categories. The price of food in the 'other' category is not considered.</p>
           <div id="totalCost"></div>
           <p id="totalCostTitle">
             Top 3 Food Waste Costs
@@ -546,6 +547,8 @@
 
 
         data.forEach(function(d) {
+          var date= d.js_date;
+          console.log(date);
 
             
 
@@ -849,8 +852,6 @@
     <div align="center">
       <button type="submit" class="btn btn-success">Enter Food Waste</button>
     </div>
-
-
 
     <br />
     <br />
