@@ -28,9 +28,9 @@ def home():
             takeout = request.form.get('takeout')
             other = request.form.get('other')
             # getting js date
-            todaysDate = datetime.date.today()
+            todaysDate = datetime.datetime.now()
             timeTuple = todaysDate.timetuple()
-            js_date = int(time.mktime(timeTuple)) * 1000
+            js_date = int(time.mktime(timeTuple)) 
 
             new_note = UserFoodWaste(fruit=fruit, veggies=veggies, 
                                         dairy=dairy, meat=meat, poultry=poultry, 

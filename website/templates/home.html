@@ -536,7 +536,6 @@
         var yAxis = [
           "Fruits",
           "Vegetables",
-          // "Milk",
           "Dairy",
           "Meat",
           "Poultry",
@@ -547,10 +546,6 @@
 
 
         data.forEach(function(d) {
-          var date= d.js_date;
-          console.log(date);
-
-            
 
             // getting total values of data
             totalFruit += d.fruit || 0;
@@ -728,6 +723,9 @@
 
         });
 
+
+        // create green o meter
+
         // calculate total waste
         var totalFruit=0; 
         var totalVegetable=0;
@@ -741,6 +739,14 @@
 
         // calculate total Waste
         data.forEach(function(d) {
+
+          var date= d.js_date;
+          date=new Date(date*1000).getDate()
+          console.log(date);
+
+          if(date==16){
+
+          }
 
           // getting total values of data
           totalFruit += d.fruit || 0;
@@ -871,7 +877,7 @@
         &nbsp 
         Poultry: {{day.poultry}}
         &nbsp 
-        Seafood: {{day.seafood}}
+        Seafood: {{day.fish_seafood}}
         &nbsp 
         Takeout: {{day.takeout}}
         &nbsp 
