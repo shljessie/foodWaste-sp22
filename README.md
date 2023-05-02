@@ -1,4 +1,7 @@
-# Food Waste Data Visualization Study
+# Self-Tracking Data Visualizations for Reducing Food Waste
+
+Research Prototype of Data Visualization Study. User login, data storage, Interactive Visualizations 
+Django, React, D3.js
 
 Final Hosted Website: http://192.241.145.244
 
